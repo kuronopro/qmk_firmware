@@ -163,6 +163,7 @@ void a_gui_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_a_gui_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_A); break;
         case TD_SINGLE_HOLD: register_code(KC_LGUI); layer_on(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_A); register_code(KC_A); break;
         case TD_DOUBLE_HOLD: register_code(KC_A); break;
         default: break;
@@ -173,6 +174,7 @@ void a_gui_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_a_gui_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_A); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LGUI); layer_off(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_A); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_A); break;
         default: break;
@@ -192,6 +194,7 @@ void s_alt_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_s_alt_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_S); break;
         case TD_SINGLE_HOLD: register_code(KC_LALT); layer_on(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_S); register_code(KC_S); break;
         case TD_DOUBLE_HOLD: register_code(KC_S); break;
         default: break;
@@ -202,6 +205,7 @@ void s_alt_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_s_alt_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_S); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LALT); layer_off(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_S); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_S); break;
         default: break;
@@ -221,6 +225,7 @@ void d_ctl_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_d_ctl_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_D); break;
         case TD_SINGLE_HOLD: register_code(KC_LCTL); layer_on(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_D); register_code(KC_D); break;
         case TD_DOUBLE_HOLD: register_code(KC_D); break;
         default: break;
@@ -231,6 +236,7 @@ void d_ctl_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_d_ctl_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_D); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LCTL); layer_off(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_D); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_D); break;
         default: break;
@@ -250,6 +256,7 @@ void f_sft_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_f_sft_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_F); break;
         case TD_SINGLE_HOLD: register_code(KC_LSFT); layer_on(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_F); register_code(KC_F); break;
         case TD_DOUBLE_HOLD: register_code(KC_F); break;
         default: break;
@@ -260,6 +267,7 @@ void f_sft_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_f_sft_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_F); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LSFT); layer_off(_LMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_F); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_F); break;
         default: break;
@@ -279,6 +287,7 @@ void j_sft_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_j_sft_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_J); break;
         case TD_SINGLE_HOLD: register_code(KC_LSFT); layer_on(_RMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_J); register_code(KC_J); break;
         case TD_DOUBLE_HOLD: register_code(KC_J); break;
         default: break;
@@ -289,6 +298,7 @@ void j_sft_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_j_sft_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_J); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LSFT); layer_off(_RMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_J); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_J); break;
         default: break;
@@ -308,6 +318,7 @@ void k_ctl_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_k_ctl_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_K); break;
         case TD_SINGLE_HOLD: register_code(KC_LCTL); layer_on(_RMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_K); register_code(KC_K); break;
         case TD_DOUBLE_HOLD: register_code(KC_K); break;
         default: break;
@@ -318,6 +329,7 @@ void k_ctl_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_k_ctl_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_K); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LCTL); layer_off(_RMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_K); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_K); break;
         default: break;
@@ -337,6 +349,7 @@ void l_alt_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_l_alt_tap_state.state) {
         case TD_SINGLE_TAP: register_code(KC_L); break;
         case TD_SINGLE_HOLD: register_code(KC_LALT); layer_on(_RMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: tap_code(KC_L); register_code(KC_L); break;
         case TD_DOUBLE_HOLD: register_code(KC_L); break;
         default: break;
@@ -347,6 +360,7 @@ void l_alt_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (td_l_alt_tap_state.state) {
         case TD_SINGLE_TAP: unregister_code(KC_L); break;
         case TD_SINGLE_HOLD: unregister_code(KC_LALT); layer_off(_RMOD); break;
+        case TD_DOUBLE_TAP:
         case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_L); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_L); break;
         default: break;
@@ -595,7 +609,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case K_CTL:
         case D_CTL:
-            return TAPPING_TERM - 35;
+            return TAPPING_TERM - 15;
         case SPC_SYM:
             return TAPPING_TERM + 15;
         case A_GUI:
