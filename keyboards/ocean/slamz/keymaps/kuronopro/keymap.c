@@ -481,7 +481,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAVIGATION] = LAYOUT(
-        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
+        KC_ESC,  XXXXXXX, SW_TABL, SW_TABR, SW_WIN,  KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
         KC_CAPS, CMLCASE, KBBCASE, SNKCASE, CAPSWRD, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, KC_INS,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
@@ -595,10 +595,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case K_CTL:
         case D_CTL:
-            return TAPPING_TERM - 65;
+            return TAPPING_TERM - 35;
         case SPC_SYM:
-        case A_GUI:
             return TAPPING_TERM + 15;
+        case A_GUI:
+            return TAPPING_TERM + 25;
         default:
             return TAPPING_TERM;
     }
