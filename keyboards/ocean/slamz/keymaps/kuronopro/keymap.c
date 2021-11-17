@@ -3,7 +3,7 @@
 #include "casemodes.h"
 #include "swapper.h"
 
-enum layers { _QWERTY, _SYMBOL, _NUMBER, _NAVIGATION, _FUNCTION, _MOUSE, _LMOD, _RMOD };
+enum layers { _QWERTY, _SYMBOL, _NUMBER, _NAVIGATION, _CODE, _FUNCTION, _MOUSE, _LMOD, _RMOD };
 
 // tap dance yg dipake
 enum {
@@ -455,6 +455,7 @@ enum custom_keycodes {
 #define SPC_SYM LT(_SYMBOL, KC_SPC)
 #define ENT_FUN LT(_FUNCTION, KC_ENT)
 #define MOUSE   TO(_MOUSE)
+#define MO_CODE MO(_CODE)
 
 // home row mod
 #define A_GUI   TD(TD_A_GUI)
@@ -488,22 +489,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUMBER] = LAYOUT( // media button juga dimasukkan di sini
-        KC_MUTE, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU, KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLD, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS,
+        KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS,
+        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_ENT,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, KC_0,    XXXXXXX, XXXXXXX
     ),
 
     [_NAVIGATION] = LAYOUT(
-        KC_ESC,  XXXXXXX, SW_TABL, SW_TABR, SW_WIN,  KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
-        KC_CAPS, CMLCASE, KBBCASE, SNKCASE, CAPSWRD, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, KC_INS,
+        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  MOUSE,
+        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
+        MO_CODE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CAPSWRD, SNKCASE, KBBCASE, CMLCASE, KC_CAPS,
+        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
+    ),
+
+    [_CODE] = LAYOUT(
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, _______,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
 
     [_FUNCTION] = LAYOUT(
-        KC_F12,  KC_F7,   KC_F8,   KC_F9,   XXXXXXX, KC_BRIU, XXXXXXX, XXXXXXX, XXXXXXX, MOUSE,
-        KC_F11,  KC_F4,   KC_F5,   KC_F6,   XXXXXXX, KC_BRID, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_F12,  KC_F7,   KC_F8,   KC_F9,   XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, MOUSE,
+        KC_F11,  KC_F4,   KC_F5,   KC_F6,   XXXXXXX, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
         KC_F10,  KC_F1,   KC_F2,   KC_F3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
