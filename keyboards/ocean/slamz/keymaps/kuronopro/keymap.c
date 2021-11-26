@@ -134,7 +134,8 @@ enum custom_keycodes {
 #define CUT     C(KC_X)
 #define COPY    C(KC_C)
 #define PASTE   C(KC_V)
-#define REDO    C(KC_B)
+#define REDO    C(KC_Y)
+#define SEL_ALL C(KC_A)
 
 // shortcut untuk workspace di linuxmint
 #define WS_LEFT LCA(KC_LEFT)
@@ -147,8 +148,9 @@ enum custom_keycodes {
 #define BSP_NAV LT(_NAVIGATION, KC_BSPC)
 #define SPC_SYM LT(_SYMBOL, KC_SPC)
 #define ENT_FUN LT(_FUNCTION, KC_ENT)
-#define MOUSE   TO(_MOUSE)
 #define Z_CODE  LT(_CODE, KC_Z)
+#define MOUSE   TO(_MOUSE)
+#define NAV     TO(_NAVIGATION)
 
 // home row mod
 #define A_GUI   LGUI_T(KC_A) // TD(TD_A_GUI)
@@ -174,49 +176,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         A_GUI,   S_ALT,   D_CTL,   F_SFT,   KC_G,    KC_H,    J_SFT,   K_CTL,   L_ALT,   QUO_GUI,
         Z_CODE,  KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        XXXXXXX, XXXXXXX, TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, XXXXXXX, XXXXXXX
+        KC_ESC,  KC_DEL,  TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, NAV,     MOUSE
     ),
 
     [_SYMBOL] = LAYOUT(
         KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, KC_EXLM, KC_LCBR, KC_PIPE, KC_RCBR, KC_QUES,
         KC_DLR,  KC_AMPR, MIN_ARR, KC_UNDS, KC_SCLN, KC_CIRC, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
         KC_GRV,  KC_AT,   EQL_ARR, KC_HASH, KC_BSLS, KC_PERC, LT_PHP,  KC_ASTR, GT_PHP,  KC_PLUS,
-        XXXXXXX, XXXXXXX, KC_BSPC, XXXXXXX, KC_SPC,  _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
+        _______, _______, KC_BSPC, XXXXXXX, KC_SPC,  _______, XXXXXXX, _______, _______, _______
     ),
 
     [_NUMBER] = LAYOUT( // media button juga dimasukkan di sini
         KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_ENT,
-        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, KC_0,    XXXXXXX, _______, XXXXXXX, XXXXXXX
+        _______, _______, _______, XXXXXXX, _______, KC_0,    XXXXXXX, _______, _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
-        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  MOUSE,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CAPSWRD, SNKCASE, KBBCASE, CMLCASE, KC_CAPS,
-        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
+        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_INS,
+        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SEL_ALL, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
+        UNDO,    CUT,     COPY,    PASTE,   REDO,    WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, XXXXXXX,
+        _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, NORMAL,  _______
     ),
 
     [_CODE] = LAYOUT(
         _______, _______, _______, _______, _______, VSC_NEW, _______, _______, _______, VSC_CLA,
         _______, _______, _______, _______, _______, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
-        _______, _______, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, _______,
-        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
+        _______, _______, _______, _______, _______, CAPSWRD, SNKCASE, KBBCASE, CMLCASE, KC_CAPS,
+        _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______
     ),
 
     [_FUNCTION] = LAYOUT(
-        KC_F12,  KC_F7,   KC_F8,   KC_F9,   XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, MOUSE,
+        KC_F12,  KC_F7,   KC_F8,   KC_F9,   XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, KC_PSCR,
         KC_F11,  KC_F4,   KC_F5,   KC_F6,   XXXXXXX, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_F10,  KC_F1,   KC_F2,   KC_F3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,
+        KC_F10,  KC_F1,   KC_F2,   KC_F3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
 
     [_MOUSE] = LAYOUT(
-        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, NORMAL,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
-        UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RESET,
-        XXXXXXX, XXXXXXX, KC_BTN2, XXXXXXX, KC_BTN1, KC_BTN1, XXXXXXX, KC_BTN2, XXXXXXX, XXXXXXX
+        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, RESET,
+        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SEL_ALL, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
+        UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, _______, KC_BTN2, XXXXXXX, KC_BTN1, KC_BTN1, XXXXXXX, KC_BTN2, _______, NORMAL
     ),
 };
 
