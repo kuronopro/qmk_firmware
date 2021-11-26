@@ -20,89 +20,80 @@ enum {
 
 // fungsi untuk TD_EQL_ARR
 
-void equal_arrow_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code(KC_EQL);
-    } else {
-        register_code(KC_EQL);
-        register_code16(KC_GT);
+void equal_arrow(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 2:
+            tap_code(KC_EQL);
+            tap_code16(KC_GT);
+            break;
+        default:
+            tap_code(KC_EQL);
+            break;
     }
-}
 
-void equal_arrow_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code(KC_EQL);
-    } else {
-        unregister_code(KC_EQL);
-        unregister_code16(KC_GT);
-    }
+    reset_tap_dance(state);
 }
 
 // fungsi untuk TD_MIN_ARR
 
-void minus_arrow_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code(KC_MINS);
-    } else {
-        register_code(KC_MINS);
-        register_code16(KC_GT);
+void minus_arrow(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 2:
+            tap_code(KC_MINS);
+            tap_code16(KC_GT);
+            break;
+        default:
+            tap_code(KC_MINS);
+            break;
     }
-}
 
-void minus_arrow_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code(KC_MINS);
-    } else {
-        unregister_code(KC_MINS);
-        unregister_code16(KC_GT);
-    }
+    reset_tap_dance(state);
 }
 
 // fungsi untuk TD_PHP_OPN
 
-void php_open_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code16(KC_LT);
-    } else {
-        register_code16(KC_LT);
-        register_code16(KC_QUES);
+void php_open(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 2:
+            tap_code16(KC_LT);
+            tap_code16(KC_QUES);
+            tap_code(KC_EQL);
+            break;
+        case 3:
+            tap_code16(KC_LT);
+            tap_code16(KC_QUES);
+            tap_code(KC_P);
+            tap_code(KC_H);
+            tap_code(KC_P);
+        default:
+            tap_code16(KC_LT);
+            break;
     }
-}
 
-void php_open_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code16(KC_LT);
-    } else {
-        unregister_code16(KC_LT);
-        unregister_code16(KC_QUES);
-    }
+    reset_tap_dance(state);
 }
 
 // fungsi untuk TD_PHP_CLS
 
-void php_close_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code16(KC_GT);
-    } else {
-        register_code16(KC_QUES);
-        register_code16(KC_GT);
+void php_close(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 2:
+            tap_code16(KC_QUES);
+            tap_code16(KC_GT);
+            break;
+        default:
+            tap_code16(KC_GT);
+            break;
     }
-}
 
-void php_close_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code16(KC_GT);
-    } else {
-        unregister_code16(KC_QUES);
-        unregister_code16(KC_GT);
-    }
+    reset_tap_dance(state);
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_EQL_ARR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, equal_arrow_finished, equal_arrow_reset),
-    [TD_MIN_ARR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, minus_arrow_finished, minus_arrow_reset),
-    [TD_PHP_OPN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, php_open_finished, php_open_reset),
-    [TD_PHP_CLS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, php_close_finished, php_close_reset),
+    [TD_EQL_ARR] = ACTION_TAP_DANCE_FN(equal_arrow),
+    [TD_MIN_ARR] = ACTION_TAP_DANCE_FN(minus_arrow),
+    [TD_PHP_OPN] = ACTION_TAP_DANCE_FN(php_open),
+    [TD_PHP_CLS] = ACTION_TAP_DANCE_FN(php_close),
 };
 
 enum custom_keycodes {
@@ -127,7 +118,11 @@ enum custom_keycodes {
     // vscode fokus editor kanan
     VSC_FER,
     // vscode fokus editor kiri
-    VSC_FEL
+    VSC_FEL,
+    // vscode pindah ke editor kanan
+    VSC_MER,
+    // vscode pindah ke editor kiri
+    VSC_MEL
 };
 
 // short cut pindah tab
@@ -171,6 +166,9 @@ enum custom_keycodes {
 #define LT_PHP  TD(TD_PHP_OPN)
 #define GT_PHP  TD(TD_PHP_CLS)
 
+// shortcut vscode
+#define VSC_NEW MEH(KC_N)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
@@ -190,7 +188,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_ENT,
-        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, KC_0,    XXXXXXX, XXXXXXX
+        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, KC_0,    XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
 
     [_NAVIGATION] = LAYOUT(
@@ -201,8 +199,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_CODE] = LAYOUT(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, VSC_CLA,
-        _______, _______, _______, _______, _______, VSC_FEL, _______, _______, VSC_FER, _______,
+        _______, _______, _______, _______, _______, VSC_NEW, _______, _______, _______, VSC_CLA,
+        _______, _______, _______, _______, _______, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
         _______, _______, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, _______,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
@@ -221,35 +219,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, KC_BTN2, XXXXXXX, KC_BTN1, KC_BTN1, XXXXXXX, KC_BTN2, XXXXXXX, XXXXXXX
     ),
 };
-
-bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
-        switch (keycode) {
-            // Keycodes to ignore (don't disable caps word)
-            case KC_A ... KC_Z:
-            case KC_1 ... KC_0:
-            case KC_MINS:
-            case KC_UNDS:
-            case KC_BSPC:
-            case A_GUI:
-            case S_ALT:
-            case D_CTL:
-            case F_SFT:
-            case J_SFT:
-            case K_CTL:
-            case L_ALT:
-                // If mod chording disable the mods
-                if (record->event.pressed && (get_mods() != 0)) {
-                    return true;
-                }
-                break;
-            default:
-                if (record->event.pressed) {
-                    return true;
-                }
-                break;
-        }
-        return false;
-}
 
 bool sw_win_active = false;
 
@@ -313,6 +282,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_RGHT);
             } else {
                 unregister_code(KC_LCTL);
+            }
+            break;
+        case VSC_MEL:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                tap_code(KC_K);
+                register_code(KC_LSFT);
+                tap_code(KC_LEFT);
+            } else {
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
+            }
+            break;
+        case VSC_MER:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                tap_code(KC_K);
+                register_code(KC_LSFT);
+                tap_code(KC_RGHT);
+            } else {
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
             }
             break;
     }
