@@ -3,7 +3,7 @@
 #include "casemodes.h"
 #include "swapper.h"
 
-enum layers { _QWERTY, _SYMBOL, _NUMBER, _NAVIGATION, _CODE, _FUNCTION, _MOUSE };
+enum layers { _QWERTY, _SYMBOL, _NUMBER, _NAVIGATION, _SHORTCUT, _FUNCTION, _MOUSE };
 
 // tap dance yg dipake
 enum {
@@ -148,7 +148,9 @@ enum custom_keycodes {
 #define BSP_NAV LT(_NAVIGATION, KC_BSPC)
 #define SPC_SYM LT(_SYMBOL, KC_SPC)
 #define ENT_FUN LT(_FUNCTION, KC_ENT)
-#define Z_CODE  LT(_CODE, KC_Z)
+#define Q_NUM   LT(_NUMBER, KC_Q)
+#define Z_SHCT  LT(_SHORTCUT, KC_Z)
+#define SLS_SCT LT(_SHORTCUT, KC_SLSH)
 #define MOUSE   TO(_MOUSE)
 #define NAV     TO(_NAVIGATION)
 
@@ -173,9 +175,9 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+        Q_NUM,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         A_GUI,   S_ALT,   D_CTL,   F_SFT,   KC_G,    KC_H,    J_SFT,   K_CTL,   L_ALT,   QUO_GUI,
-        Z_CODE,  KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
+        Z_SHCT,  KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
         KC_ESC,  KC_DEL,  TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, NAV,     MOUSE
     ),
 
@@ -189,8 +191,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUMBER] = LAYOUT( // media button juga dimasukkan di sini
         KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DOT,  KC_1,    KC_2,    KC_3,    KC_ENT,
-        _______, _______, _______, XXXXXXX, _______, KC_0,    XXXXXXX, _______, _______, _______
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_EQL,
+        _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
@@ -200,7 +202,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, NORMAL,  _______
     ),
 
-    [_CODE] = LAYOUT(
+    [_SHORTCUT] = LAYOUT(
         _______, _______, _______, _______, _______, VSC_NEW, _______, _______, _______, VSC_CLA,
         _______, _______, _______, _______, _______, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
         _______, _______, _______, _______, _______, CAPSWRD, SNKCASE, KBBCASE, CMLCASE, KC_CAPS,
