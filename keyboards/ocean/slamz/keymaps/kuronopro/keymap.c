@@ -3,7 +3,7 @@
 #include "casemodes.h"
 #include "swapper.h"
 
-enum layers { _QWERTY, _SYMBOL, _NUMBER, _NAVIGATION, _SHORTCUT, _FUNCTION, _MOUSE };
+enum layers { _QWERTY, _COLEMAK, _SYMBOL, _NUMBER, _NAVIGATION, _SHORTCUT, _FUNCTION, _MOUSE };
 
 // tap dance yg dipake
 enum {
@@ -99,6 +99,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 enum custom_keycodes {
     // clear semua layer, balik ke default
     NORMAL = SAFE_RANGE,
+    QWERTY,
+    COLEMAK,
 
     // berguna untuk ngetik variabel/fungsi ketika koding
     // caps word, capslock untuk satu kata
@@ -155,14 +157,22 @@ enum custom_keycodes {
 #define NAV     TO(_NAVIGATION)
 
 // home row mod
-#define A_GUI   LGUI_T(KC_A) // TD(TD_A_GUI)
-#define S_ALT   LALT_T(KC_S) // TD(TD_S_ALT)
-#define D_CTL   LCTL_T(KC_D) // TD(TD_D_CTL)
-#define F_SFT   LSFT_T(KC_F) // TD(TD_F_SFT)
-#define J_SFT   LSFT_T(KC_J) // TD(TD_J_SFT)
-#define K_CTL   LCTL_T(KC_K) // TD(TD_K_CTL)
-#define L_ALT   LALT_T(KC_L) // TD(TD_L_ALT)
-#define QUO_GUI LGUI_T(KC_QUOT) // TD(TD_QUO_GUI)
+#define A_GUI   LGUI_T(KC_A)
+#define S_ALT   LALT_T(KC_S)
+#define D_CTL   LCTL_T(KC_D)
+#define F_SFT   LSFT_T(KC_F)
+#define J_SFT   LSFT_T(KC_J)
+#define K_CTL   LCTL_T(KC_K)
+#define L_ALT   LALT_T(KC_L)
+#define QUO_GUI LGUI_T(KC_QUOT)
+
+#define R_ALT   LALT_T(KC_R)
+#define S_CTL   LCTL_T(KC_S)
+#define T_SFT   LSFT_T(KC_T)
+#define N_SFT   LSFT_T(KC_N)
+#define E_CTL   LCTL_T(KC_E)
+#define I_ALT   LALT_T(KC_I)
+#define O_GUI   LGUI_T(KC_O)
 
 // tap dance
 #define EQL_ARR TD(TD_EQL_ARR)
@@ -181,6 +191,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_DEL,  TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, NAV,     MOUSE
     ),
 
+    [_COLEMAK] = LAYOUT(
+        Q_NUM,   KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
+        A_GUI,   R_ALT,   S_CTL,   T_SFT,   KC_D,    KC_H,    N_SFT,   E_CTL,   I_ALT,   O_GUI,
+        Z_SHCT,  KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
+        KC_ESC,  KC_DEL,  TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, NAV,     MOUSE
+    ),
+
     [_SYMBOL] = LAYOUT(
         KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, KC_EXLM, KC_LCBR, KC_PIPE, KC_RCBR, KC_QUES,
         KC_DLR,  KC_AMPR, MIN_ARR, KC_UNDS, KC_SCLN, KC_CIRC, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
@@ -189,10 +206,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUMBER] = LAYOUT( // media button juga dimasukkan di sini
-        KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_EQL,
-        _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______
+        KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_7,    KC_8,    KC_9,    KC_PLUS, KC_EQL,
+        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_4,    KC_5,    KC_6,    KC_MINS, KC_ASTR,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3,    KC_DOT,  KC_SLSH,
+        _______, _______, _______, XXXXXXX, _______, KC_0,    XXXXXXX, _______, _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
@@ -210,8 +227,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_FUNCTION] = LAYOUT(
-        KC_F12,  KC_F7,   KC_F8,   KC_F9,   XXXXXXX, XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, KC_PSCR,
-        KC_F11,  KC_F4,   KC_F5,   KC_F6,   XXXXXXX, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_F12,  KC_F7,   KC_F8,   KC_F9,   QWERTY,  XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, KC_PSCR,
+        KC_F11,  KC_F4,   KC_F5,   KC_F6,   COLEMAK, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
         KC_F10,  KC_F1,   KC_F2,   KC_F3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
@@ -233,6 +250,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     );
 
     switch (keycode) {
+        case QWERTY:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY);
+            }
+            return false;
+        case COLEMAK:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_COLEMAK);
+            }
+            return false;
         case NORMAL:
             layer_clear();
             return false;
@@ -242,19 +269,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 enable_caps_word();
             }
             return false;
-
         case SNKCASE:
             if (record->event.pressed) {
                 enable_xcase_with(KC_UNDS);
             }
             return false;
-
         case KBBCASE:
             if (record->event.pressed) {
                 enable_xcase_with(KC_MINS);
             }
             return false;
-
         case CMLCASE:
             if (record->event.pressed) {
                 enable_xcase_with(OSM(MOD_LSFT));
