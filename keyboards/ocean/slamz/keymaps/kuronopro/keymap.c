@@ -3,22 +3,11 @@
 #include "casemodes.h"
 #include "swapper.h"
 
-enum layers { _QWERTY, _COLEMAK, _SYMBOL, _NUMBER, _NAVIGATION, _SHORTCUT, _FUNCTION, _MOUSE };
+enum layers {_QWERTY, _COLEMAK, _LOWER, _RAISE, _NUMBER, _SYMBOL, _NAVIGATION, _FUNCTION, _MOUSE, _SHORTCUT };
 
-// tap dance yg dipake
-enum {
-    // berguna untuk koding php
-    // tap untuk =, double tap untuk =>
-    TD_EQL_ARR,
-    // tap untuk -, double tap untuk ->
-    TD_MIN_ARR,
-    // tap untuk <, double tap untuk <?
-    TD_PHP_OPN,
-    // tap untuk >, double tap untuk ?>
-    TD_PHP_CLS,
-};
+enum combos { TAB_QWER, TAB_CLMK, ESC_QWER, ESC_CLMK, DEL, ENT_QWER, ENT_CLMK, BSP_QWER, BSP_CLMK, C_BSP_QWER, C_BSP_CLMK };
 
-// fungsi untuk TD_EQL_ARR
+enum { TD_EQUAL_ARROW, TD_MINUS_ARROW };
 
 void equal_arrow(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
@@ -34,8 +23,6 @@ void equal_arrow(qk_tap_dance_state_t *state, void *user_data) {
     reset_tap_dance(state);
 }
 
-// fungsi untuk TD_MIN_ARR
-
 void minus_arrow(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 2:
@@ -50,194 +37,154 @@ void minus_arrow(qk_tap_dance_state_t *state, void *user_data) {
     reset_tap_dance(state);
 }
 
-// fungsi untuk TD_PHP_OPN
-
-void php_open(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 2:
-            tap_code16(KC_LT);
-            tap_code16(KC_QUES);
-            tap_code(KC_EQL);
-            break;
-        case 3:
-            tap_code16(KC_LT);
-            tap_code16(KC_QUES);
-            tap_code(KC_P);
-            tap_code(KC_H);
-            tap_code(KC_P);
-        default:
-            tap_code16(KC_LT);
-            break;
-    }
-
-    reset_tap_dance(state);
-}
-
-// fungsi untuk TD_PHP_CLS
-
-void php_close(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 2:
-            tap_code16(KC_QUES);
-            tap_code16(KC_GT);
-            break;
-        default:
-            tap_code16(KC_GT);
-            break;
-    }
-
-    reset_tap_dance(state);
-}
-
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_EQL_ARR] = ACTION_TAP_DANCE_FN(equal_arrow),
-    [TD_MIN_ARR] = ACTION_TAP_DANCE_FN(minus_arrow),
-    [TD_PHP_OPN] = ACTION_TAP_DANCE_FN(php_open),
-    [TD_PHP_CLS] = ACTION_TAP_DANCE_FN(php_close),
+    [TD_EQUAL_ARROW] = ACTION_TAP_DANCE_FN(equal_arrow),
+    [TD_MINUS_ARROW] = ACTION_TAP_DANCE_FN(minus_arrow)
 };
 
 enum custom_keycodes {
-    // clear semua layer, balik ke default
-    NORMAL = SAFE_RANGE,
-    QWERTY,
+    QWERTY = SAFE_RANGE,
     COLEMAK,
+    NORMAL,
 
-    // berguna untuk ngetik variabel/fungsi ketika koding
-    // caps word, capslock untuk satu kata
-    CAPSWRD,
-    // snake case, pencet spasi untuk _
-    SNKCASE,
-    // kebab case, pencet spasi untuk -
-    KBBCASE,
-    // camel case, pencet spasi untuk one shot shift
-    CMLCASE,
-
-    // switch window aka alt+tab
     SW_WIN,
 
-    // vscode tutup semua editor
+    CAPSWRD,
+    SNKCASE,
+    KBBCASE,
+
     VSC_CLA,
-    // vscode fokus editor kanan
     VSC_FER,
-    // vscode fokus editor kiri
     VSC_FEL,
-    // vscode pindah ke editor kanan
     VSC_MER,
-    // vscode pindah ke editor kiri
     VSC_MEL
 };
 
-// short cut pindah tab
-#define SW_TABL C(KC_PGUP)
-#define SW_TABR C(KC_PGDN)
+#define BSP_SFT LSFT_T(KC_BSPC)
+#define SPC_SFT LSFT_T(KC_SPC)
+#define U_NUM   LT(_NUMBER, KC_U)
+#define F_NAV   LT(_NAVIGATION, KC_F)
+#define J_SYM   LT(_SYMBOL, KC_J)
+#define Z_SCT   LT(_SHORTCUT, KC_Z)
+#define V_MOU   LT(_MOUSE, KC_V)
+#define M_FUN   LT(_FUNCTION, KC_M)
+#define SLS_SCT LT(_SHORTCUT, KC_SLSH)
+#define L_NUM   LT(_NUMBER, KC_L)
+#define T_NAV   LT(_NAVIGATION, KC_T)
+#define N_SYM   LT(_SYMBOL, KC_N)
+#define MOUSE   TO(_MOUSE)
 
-// shortcut copy dkk
+#define A_GUI   LGUI_T(KC_A)
+#define S_ALT   LALT_T(KC_S)
+#define D_CTL   LCTL_T(KC_D)
+#define K_CTL   LCTL_T(KC_K)
+#define L_ALT   LALT_T(KC_L)
+#define QUO_GUI LGUI_T(KC_QUOT)
+#define R_ALT   LALT_T(KC_R)
+#define S_CTL   LCTL_T(KC_S)
+#define E_CTL   LCTL_T(KC_E)
+#define I_ALT   LALT_T(KC_I)
+#define O_GUI   LGUI_T(KC_O)
+
+#define EQL_ARR TD(TD_EQUAL_ARROW)
+#define MIN_ARR TD(TD_MINUS_ARROW)
+#define UND_MIN TD(TD_UNDERSCORE_MINUS)
+
+#define WS_LEFT LCA(KC_LEFT)
+#define WS_RGHT LCA(KC_RGHT)
+#define WSM_LFT MEH(KC_LEFT)
+#define WSM_RGT MEH(KC_RGHT)
+#define WS_DOWN LCA(KC_DOWN)
+
+#define VSC_NEW MEH(KC_N)
+#define VSC_BAK LCA(KC_MINS)
+
 #define UNDO    C(KC_Z)
 #define CUT     C(KC_X)
 #define COPY    C(KC_C)
 #define PASTE   C(KC_V)
 #define REDO    C(KC_Y)
 #define SEL_ALL C(KC_A)
+#define SAVE    C(KC_S)
+#define FIND    C(KC_F)
 
-// shortcut untuk workspace di linuxmint
-#define WS_LEFT LCA(KC_LEFT)
-#define WS_RGHT LCA(KC_RGHT)
-#define WSM_LFT MEH(KC_LEFT)
-#define WSM_RGT MEH(KC_RGHT)
+const uint16_t PROGMEM tab_qwer_combo[] = { S_ALT, D_CTL, COMBO_END };
+const uint16_t PROGMEM tab_clmk_combo[] = { R_ALT, S_CTL, COMBO_END };
+const uint16_t PROGMEM esc_qwer_combo[] = { KC_W, KC_E, COMBO_END };
+const uint16_t PROGMEM esc_clmk_combo[] = { KC_W, KC_F, COMBO_END };
+const uint16_t PROGMEM del_combo[] = { KC_X, KC_C, COMBO_END };
+const uint16_t PROGMEM ent_qwer_combo[] = { K_CTL, L_ALT, COMBO_END };
+const uint16_t PROGMEM ent_clmk_combo[] = { E_CTL, I_ALT, COMBO_END };
+const uint16_t PROGMEM bsp_qwer_combo[] = { KC_I, KC_O, COMBO_END };
+const uint16_t PROGMEM bsp_clmk_combo[] = { KC_U, KC_Y, COMBO_END };
 
-// layer change
-#define TAB_NUM LT(_NUMBER, KC_TAB)
-#define BSP_NAV LT(_NAVIGATION, KC_BSPC)
-#define SPC_SYM LT(_SYMBOL, KC_SPC)
-#define ENT_FUN LT(_FUNCTION, KC_ENT)
-#define Q_NUM   LT(_NUMBER, KC_Q)
-#define Z_SHCT  LT(_SHORTCUT, KC_Z)
-#define SLS_SCT LT(_SHORTCUT, KC_SLSH)
-#define MOUSE   TO(_MOUSE)
-#define NAV     TO(_NAVIGATION)
-
-// home row mod
-#define A_GUI   LGUI_T(KC_A)
-#define S_ALT   LALT_T(KC_S)
-#define D_CTL   LCTL_T(KC_D)
-#define F_SFT   LSFT_T(KC_F)
-#define J_SFT   LSFT_T(KC_J)
-#define K_CTL   LCTL_T(KC_K)
-#define L_ALT   LALT_T(KC_L)
-#define QUO_GUI LGUI_T(KC_QUOT)
-
-#define R_ALT   LALT_T(KC_R)
-#define S_CTL   LCTL_T(KC_S)
-#define T_SFT   LSFT_T(KC_T)
-#define N_SFT   LSFT_T(KC_N)
-#define E_CTL   LCTL_T(KC_E)
-#define I_ALT   LALT_T(KC_I)
-#define O_GUI   LGUI_T(KC_O)
-
-// tap dance
-#define EQL_ARR TD(TD_EQL_ARR)
-#define MIN_ARR TD(TD_MIN_ARR)
-#define LT_PHP  TD(TD_PHP_OPN)
-#define GT_PHP  TD(TD_PHP_CLS)
-
-// shortcut vscode
-#define VSC_NEW MEH(KC_N)
+combo_t key_combos[COMBO_COUNT] = {
+    [TAB_QWER] = COMBO(tab_qwer_combo, KC_TAB),
+    [TAB_CLMK] = COMBO(tab_clmk_combo, KC_TAB),
+    [ESC_QWER] = COMBO(esc_qwer_combo, KC_ESC),
+    [ESC_CLMK] = COMBO(esc_clmk_combo, KC_ESC),
+    [DEL] = COMBO(del_combo, KC_DEL),
+    [ENT_QWER] = COMBO(ent_qwer_combo, KC_ENT),
+    [ENT_CLMK] = COMBO(ent_clmk_combo, KC_ENT),
+    [BSP_QWER] = COMBO(bsp_qwer_combo, KC_BSPC),
+    [BSP_CLMK] = COMBO(bsp_clmk_combo, KC_BSPC)
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        Q_NUM,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        A_GUI,   S_ALT,   D_CTL,   F_SFT,   KC_G,    KC_H,    J_SFT,   K_CTL,   L_ALT,   QUO_GUI,
-        Z_SHCT,  KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
-        KC_ESC,  KC_DEL,  TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, NAV,     MOUSE
+        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    U_NUM,   KC_I,    KC_O,    KC_P,
+        A_GUI,   S_ALT,   D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   L_ALT,   QUO_GUI,
+        Z_SCT,   KC_X,    KC_C,    V_MOU,   KC_B,    KC_N,    M_FUN,   KC_COMM, KC_DOT,  SLS_SCT,
+        XXXXXXX, XXXXXXX, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  XXXXXXX, XXXXXXX
     ),
 
     [_COLEMAK] = LAYOUT(
-        Q_NUM,   KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
-        A_GUI,   R_ALT,   S_CTL,   T_SFT,   KC_D,    KC_H,    N_SFT,   E_CTL,   I_ALT,   O_GUI,
-        Z_SHCT,  KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
-        KC_ESC,  KC_DEL,  TAB_NUM, XXXXXXX, BSP_NAV, SPC_SYM, XXXXXXX, ENT_FUN, NAV,     MOUSE
+        KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    L_NUM,   KC_U,    KC_Y,    KC_QUOT,
+        A_GUI,   R_ALT,   S_CTL,   T_NAV,   KC_D,    KC_H,    N_SYM,   E_CTL,   I_ALT,   O_GUI,
+        Z_SCT,   KC_X,    KC_C,    V_MOU,   KC_B,    KC_K,    M_FUN,   KC_COMM, KC_DOT,  SLS_SCT,
+        XXXXXXX, XXXXXXX, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  XXXXXXX, XXXXXXX
+    ),
+
+    [_NUMBER] = LAYOUT(
+        KC_GRV,  KC_7,    KC_8,    KC_9,    KC_BSLS, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        _______, KC_4,    KC_5,    KC_6,    _______, _______, _______, _______, _______, _______,
+        KC_0,    KC_1,    KC_2,    KC_3,    _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_SYMBOL] = LAYOUT(
-        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, KC_EXLM, KC_LCBR, KC_PIPE, KC_RCBR, KC_QUES,
-        KC_DLR,  KC_AMPR, MIN_ARR, KC_UNDS, KC_SCLN, KC_CIRC, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_GRV,  KC_AT,   EQL_ARR, KC_HASH, KC_BSLS, KC_PERC, LT_PHP,  KC_ASTR, GT_PHP,  KC_PLUS,
-        _______, _______, KC_BSPC, XXXXXXX, KC_SPC,  _______, XXXXXXX, _______, _______, _______
-    ),
-
-    [_NUMBER] = LAYOUT( // media button juga dimasukkan di sini
-        KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY, KC_MNXT, KC_7,    KC_8,    KC_9,    KC_PLUS, KC_EQL,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX, KC_4,    KC_5,    KC_6,    KC_MINS, KC_ASTR,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3,    KC_DOT,  KC_SLSH,
-        _______, _______, _______, XXXXXXX, _______, KC_0,    XXXXXXX, _______, _______, _______
-    ),
-
-    [_NAVIGATION] = LAYOUT(
-        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_INS,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SEL_ALL, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
-        UNDO,    CUT,     COPY,    PASTE,   REDO,    WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, XXXXXXX,
-        _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, NORMAL,  _______
-    ),
-
-    [_SHORTCUT] = LAYOUT(
-        _______, _______, _______, _______, _______, VSC_NEW, _______, _______, _______, VSC_CLA,
-        _______, _______, _______, _______, _______, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
-        _______, _______, _______, _______, _______, CAPSWRD, SNKCASE, KBBCASE, CMLCASE, KC_CAPS,
-        _______, _______, _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______
+        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, _______, _______, _______,
+        KC_DLR,  KC_AMPR, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_LCBR, KC_LT,   EQL_ARR, KC_GT,   KC_RCBR, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_FUNCTION] = LAYOUT(
-        KC_F12,  KC_F7,   KC_F8,   KC_F9,   QWERTY,  XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, KC_PSCR,
-        KC_F11,  KC_F4,   KC_F5,   KC_F6,   COLEMAK, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_F10,  KC_F1,   KC_F2,   KC_F3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, _______, XXXXXXX, XXXXXXX
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, _______, _______, _______,
+        KC_F6,   KC_7,    KC_F8,   KC_F9,   KC_F10,  _______, _______, _______, _______, _______,
+        KC_F11,  KC_F12,  KC_PSCR, KC_INS,  KC_CAPS, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
+    [_NAVIGATION] = LAYOUT(
+        _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  MOUSE,
+        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_WIN,
+        _______, _______, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, WS_DOWN,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_MOUSE] = LAYOUT(
-        KC_ESC,  SW_TABL, SW_TABR, SW_WIN,  XXXXXXX, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, RESET,
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SEL_ALL, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
-        UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, _______, KC_BTN2, XXXXXXX, KC_BTN1, KC_BTN1, XXXXXXX, KC_BTN2, _______, NORMAL
+        UNDO,    CUT,     COPY,    PASTE,   REDO,    KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, NORMAL,
+        SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, SW_WIN,
+        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, KC_BTN2, _______, KC_BTN1, KC_BTN1, _______, KC_BTN2, _______, _______
+    ),
+
+    [_SHORTCUT] = LAYOUT(
+        RESET,   KC_MUTE, KC_MNXT, KC_VOLU, KC_BRIU, VSC_NEW, KC_F12,  VSC_BAK, _______, VSC_CLA,
+        _______, _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
+        COLEMAK, _______, _______, _______, _______, CAPSWRD, SNKCASE, KBBCASE, _______, QWERTY,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
 
@@ -255,11 +202,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_single_persistent_default_layer(_QWERTY);
             }
             return false;
+
         case COLEMAK:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_COLEMAK);
             }
             return false;
+
         case NORMAL:
             layer_clear();
             return false;
@@ -269,19 +218,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 enable_caps_word();
             }
             return false;
+
         case SNKCASE:
             if (record->event.pressed) {
                 enable_xcase_with(KC_UNDS);
             }
             return false;
+
         case KBBCASE:
             if (record->event.pressed) {
                 enable_xcase_with(KC_MINS);
-            }
-            return false;
-        case CMLCASE:
-            if (record->event.pressed) {
-                enable_xcase_with(OSM(MOD_LSFT));
             }
             return false;
 
@@ -346,11 +292,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case S_ALT:
-        case SPC_SYM:
             return TAPPING_TERM + 15;
         case A_GUI:
             return TAPPING_TERM + 25;
         default:
             return TAPPING_TERM;
+    }
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case A_GUI:
+        case S_ALT:
+            return false;
+        default:
+            return true;
     }
 }
