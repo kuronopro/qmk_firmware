@@ -8,7 +8,7 @@
 #define PERMISSIVE_HOLD_PER_KEY
 
 #define COMBO_TERM 30
-#define COMBO_COUNT 9
+#define COMBO_COUNT 10
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
