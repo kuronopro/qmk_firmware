@@ -49,7 +49,7 @@ enum custom_keycodes {
 
     CAPSWRD,
     SNKCASE,
-    KBBCASE,
+    ANYCASE,
 
     VSC_CLA,
     VSC_FER,
@@ -59,9 +59,9 @@ enum custom_keycodes {
 };
 
 #define R_MOU   LT(_MOUSE, KC_R)
-#define U_SYM   LT(_SYMBOL, KC_U)
+#define U_NUM   LT(_NUMBER, KC_U)
 #define F_NAV   LT(_NAVIGATION, KC_F)
-#define J_NUM   LT(_NUMBER, KC_J)
+#define J_SYM   LT(_SYMBOL, KC_J)
 #define Z_SCT   LT(_SHORTCUT, KC_Z)
 #define V_FUN   LT(_FUNCTION, KC_V)
 #define SLS_SCT LT(_SHORTCUT, KC_SLSH)
@@ -114,23 +114,23 @@ combo_t key_combos[COMBO_COUNT] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_Q,    KC_W,    KC_E,    R_MOU,   KC_T,    KC_Y,    U_SYM,   KC_I,    KC_O,    KC_P,
-        A_GUI,   S_ALT,   D_CTL,   F_NAV,   KC_G,    KC_H,    J_NUM,   K_CTL,   L_ALT,   QUO_GUI,
+        KC_Q,    KC_W,    KC_E,    R_MOU,   KC_T,    KC_Y,    U_NUM,   KC_I,    KC_O,    KC_P,
+        A_GUI,   S_ALT,   D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   L_ALT,   QUO_GUI,
         Z_SCT,   KC_X,    KC_C,    V_FUN,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
-        KC_5,    KC_4,    KC_3,    KC_2,    KC_1,    _______, _______, _______, _______, _______,
-        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_GRV,  KC_BSLS, KC_SCLN, KC_LBRC, KC_RBRC, _______, _______, _______, _______, _______,
+        KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS, _______, _______, _______, _______, _______,
+        KC_DOT,  KC_3,    KC_2,    KC_1,    KC_0,    _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_SYMBOL] = LAYOUT(
-        KC_EXLM, KC_AT,   KC_HASH, KC_PERC, KC_CIRC, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_DLR,  KC_AMPR, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, _______, _______, _______,
-        KC_ASTR, KC_SLSH, EQL_ARR, KC_LT,   KC_GT,   _______, _______, _______, _______, _______,
+        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, _______, _______, _______,
+        KC_LCBR, KC_LT,   MIN_ARR, KC_GT,   KC_RCBR, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_GRV,  KC_BSLS, EQL_ARR, KC_DLR,  KC_SCLN, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -158,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SHORTCUT] = LAYOUT(
         RESET,   KC_MUTE, KC_MNXT, KC_VOLU, KC_BRIU, VSC_NEW, KC_F12,  VSC_BAK, _______, VSC_CLA,
         _______, _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
-        _______, _______, _______, _______, _______, CAPSWRD, SNKCASE, KBBCASE, _______, _______,
+        _______, _______, _______, _______, _______, CAPSWRD, SNKCASE, ANYCASE, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
@@ -188,9 +188,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case KBBCASE:
+        case ANYCASE:
             if (record->event.pressed) {
-                enable_xcase_with(KC_MINS);
+                enable_xcase();
             }
             return false;
 
@@ -269,6 +269,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case A_GUI:
         case S_ALT:
+        case R_MOU:
             return false;
         default:
             return true;
