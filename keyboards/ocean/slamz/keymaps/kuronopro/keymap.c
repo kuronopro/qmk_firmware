@@ -7,7 +7,7 @@ enum layers { _QWERTY, _NUMBER, _SYMBOL, _NAVIGATION, _FUNCTION, _MOUSE, _SHORTC
 
 enum combos { COMBO_TAB, COMBO_ESC, COMBO_DEL, COMBO_ENT, COMBO_BSP };
 
-enum { TD_EQUAL_ARROW, TD_MINUS_ARROW };
+enum { TD_EQUAL_ARROW, TD_MINUS_ARROW, TD_LT_PHP, TD_GT_PHP };
 
 void equal_arrow(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
@@ -37,9 +37,39 @@ void minus_arrow(qk_tap_dance_state_t *state, void *user_data) {
     reset_tap_dance(state);
 }
 
+void lt_php(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 2:
+            tap_code16(KC_LT);
+            tap_code16(KC_QUES);
+            break;
+        default:
+            tap_code16(KC_LT);
+            break;
+    }
+
+    reset_tap_dance(state);
+}
+
+void gt_php(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 2:
+            tap_code16(KC_QUES);
+            tap_code16(KC_GT);
+            break;
+        default:
+            tap_code16(KC_GT);
+            break;
+    }
+
+    reset_tap_dance(state);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_EQUAL_ARROW] = ACTION_TAP_DANCE_FN(equal_arrow),
-    [TD_MINUS_ARROW] = ACTION_TAP_DANCE_FN(minus_arrow)
+    [TD_MINUS_ARROW] = ACTION_TAP_DANCE_FN(minus_arrow),
+    [TD_LT_PHP]      = ACTION_TAP_DANCE_FN(lt_php),
+    [TD_GT_PHP]      = ACTION_TAP_DANCE_FN(gt_php)
 };
 
 enum custom_keycodes {
@@ -54,8 +84,12 @@ enum custom_keycodes {
     VSC_CLA,
     VSC_FER,
     VSC_FEL,
+    VSC_FEU,
+    VSC_FED,
     VSC_MER,
-    VSC_MEL
+    VSC_MEL,
+    VSC_MEU,
+    VSC_MED
 };
 
 #define R_MOU   LT(_MOUSE, KC_R)
@@ -78,7 +112,8 @@ enum custom_keycodes {
 
 #define EQL_ARR TD(TD_EQUAL_ARROW)
 #define MIN_ARR TD(TD_MINUS_ARROW)
-#define UND_MIN TD(TD_UNDERSCORE_MINUS)
+#define LT_PHP  TD(TD_LT_PHP)
+#define GT_PHP  TD(TD_GT_PHP)
 
 #define WS_LEFT LCA(KC_LEFT)
 #define WS_RGHT LCA(KC_RGHT)
@@ -117,20 +152,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    R_MOU,   KC_T,    KC_Y,    U_NUM,   KC_I,    KC_O,    KC_P,
         A_GUI,   S_ALT,   D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   L_ALT,   QUO_GUI,
         Z_SCT,   KC_X,    KC_C,    V_FUN,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, KC_ESC,  KC_TAB,  XXXXXXX, KC_LSFT, SPC_SFT, XXXXXXX, KC_ENT,  KC_DEL,  XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
-        KC_ASTR, KC_7,    KC_8,    KC_9,    KC_PLUS, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS, _______, _______, _______, _______, _______,
-        KC_DOT,  KC_3,    KC_2,    KC_1,    KC_0,    _______, _______, _______, _______, _______,
+        KC_GRV,  KC_7,    KC_8,    KC_9,    KC_BSLS, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS, _______, _______, _______, KC_MINS, KC_SLSH,
+        KC_0,    KC_1,    KC_2,    KC_3,    KC_DOT,  _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_SYMBOL] = LAYOUT(
         KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, _______, _______, _______,
-        KC_LCBR, KC_LT,   MIN_ARR, KC_GT,   KC_RCBR, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
-        KC_GRV,  KC_BSLS, EQL_ARR, KC_DLR,  KC_SCLN, _______, _______, _______, _______, _______,
+        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -149,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MOUSE] = LAYOUT(
-        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, NORMAL,
+        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_WH_U, KC_WH_L, KC_WH_U, KC_WH_R, NORMAL,
         SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, SW_WIN,
         UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, _______,
         _______, _______, KC_BTN2, _______, KC_BTN1, KC_BTN1, _______, KC_BTN2, _______, _______
@@ -157,8 +192,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SHORTCUT] = LAYOUT(
         RESET,   KC_MUTE, KC_MNXT, KC_VOLU, KC_BRIU, VSC_NEW, KC_F12,  VSC_BAK, _______, VSC_CLA,
-        _______, _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_MEL, VSC_FEL, VSC_FER, VSC_MER, _______,
-        _______, _______, _______, _______, _______, CAPSWRD, SNKCASE, ANYCASE, _______, _______,
+        _______, _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_FEL, VSC_FED, VSC_FEU, VSC_FER, _______,
+        CG_SWAP, ANYCASE, SNKCASE, CAPSWRD, _______, VSC_MEL, VSC_MED, VSC_MEU, VSC_MER, CG_NORM,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
@@ -221,6 +256,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_LCTL);
             }
             break;
+        case VSC_FEU:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                tap_code(KC_K);
+                tap_code(KC_UP);
+            } else {
+                unregister_code(KC_LCTL);
+            }
+            break;
+        case VSC_FED:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                tap_code(KC_K);
+                tap_code(KC_DOWN);
+            } else {
+                unregister_code(KC_LCTL);
+            }
+            break;
         case VSC_MEL:
             if (record->event.pressed) {
                 register_code(KC_LCTL);
@@ -238,6 +291,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_K);
                 register_code(KC_LSFT);
                 tap_code(KC_RGHT);
+            } else {
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
+            }
+            break;
+        case VSC_MEU:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                tap_code(KC_K);
+                register_code(KC_LSFT);
+                tap_code(KC_UP);
+            } else {
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
+            }
+            break;
+        case VSC_MED:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                tap_code(KC_K);
+                register_code(KC_LSFT);
+                tap_code(KC_DOWN);
             } else {
                 unregister_code(KC_LCTL);
                 unregister_code(KC_LSFT);
