@@ -119,7 +119,6 @@ enum custom_keycodes {
 #define WS_RGHT LCA(KC_RGHT)
 #define WSM_LFT MEH(KC_LEFT)
 #define WSM_RGT MEH(KC_RGHT)
-#define WS_DOWN LCA(KC_DOWN)
 
 #define VSC_NEW MEH(KC_N)
 #define VSC_BAK LCA(KC_MINS)
@@ -152,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    R_MOU,   KC_T,    KC_Y,    U_NUM,   KC_I,    KC_O,    KC_P,
         A_GUI,   S_ALT,   D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   L_ALT,   QUO_GUI,
         Z_SCT,   KC_X,    KC_C,    V_FUN,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
-        XXXXXXX, KC_ESC,  KC_TAB,  XXXXXXX, KC_LSFT, SPC_SFT, XXXXXXX, KC_ENT,  KC_DEL,  XXXXXXX
+        XXXXXXX, XXXXXXX, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  XXXXXXX, XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
@@ -170,9 +169,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAVIGATION] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  MOUSE,
+        _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
         KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_WIN,
-        _______, _______, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, WS_DOWN,
+        _______, _______, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, KC_DEL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -184,16 +183,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MOUSE] = LAYOUT(
-        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_WH_U, KC_WH_L, KC_WH_U, KC_WH_R, NORMAL,
+        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, KC_ESC,
         SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, SW_WIN,
-        UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, _______,
+        UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, NORMAL,
         _______, _______, KC_BTN2, _______, KC_BTN1, KC_BTN1, _______, KC_BTN2, _______, _______
     ),
 
     [_SHORTCUT] = LAYOUT(
         RESET,   KC_MUTE, KC_MNXT, KC_VOLU, KC_BRIU, VSC_NEW, KC_F12,  VSC_BAK, _______, VSC_CLA,
-        _______, _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_FEL, VSC_FED, VSC_FEU, VSC_FER, _______,
-        CG_SWAP, ANYCASE, SNKCASE, CAPSWRD, _______, VSC_MEL, VSC_MED, VSC_MEU, VSC_MER, CG_NORM,
+        MOUSE,   _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_FEL, VSC_FED, VSC_FEU, VSC_FER, _______,
+        CG_SWAP, ANYCASE, CAPSWRD, SNKCASE, _______, VSC_MEL, VSC_MED, VSC_MEU, VSC_MER, CG_NORM,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
