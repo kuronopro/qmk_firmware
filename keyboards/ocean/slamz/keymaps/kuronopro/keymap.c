@@ -5,7 +5,7 @@
 
 enum layers { _QWERTY, _NUMBER, _SYMBOL, _NAVIGATION, _FUNCTION, _MOUSE, _SHORTCUT };
 
-enum combos { COMBO_TAB, COMBO_ESC, COMBO_DEL, COMBO_ENT, COMBO_BSP };
+enum combos { COMBO_ESC, COMBO_TAB, COMBO_DEL, COMBO_ENT };
 
 enum { TD_EQUAL_ARROW, TD_MINUS_ARROW, TD_LT_PHP, TD_GT_PHP };
 
@@ -93,12 +93,11 @@ enum custom_keycodes {
 };
 
 #define R_MOU   LT(_MOUSE, KC_R)
-#define U_NUM   LT(_NUMBER, KC_U)
 #define F_NAV   LT(_NAVIGATION, KC_F)
 #define J_SYM   LT(_SYMBOL, KC_J)
 #define Z_SCT   LT(_SHORTCUT, KC_Z)
 #define V_FUN   LT(_FUNCTION, KC_V)
-#define SLS_SCT LT(_SHORTCUT, KC_SLSH)
+#define M_NUM   LT(_NUMBER, KC_M)
 #define MOUSE   TO(_MOUSE)
 
 #define BSP_SFT LSFT_T(KC_BSPC)
@@ -109,6 +108,10 @@ enum custom_keycodes {
 #define K_CTL   LCTL_T(KC_K)
 #define L_ALT   LALT_T(KC_L)
 #define QUO_GUI LGUI_T(KC_QUOT)
+#define X_ALT   LALT_T(KC_X)
+#define C_CTL   LCTL_T(KC_C)
+#define COM_CTL LCTL_T(KC_COMM)
+#define DOT_ALT LALT_T(KC_DOT)
 
 #define EQL_ARR TD(TD_EQUAL_ARROW)
 #define MIN_ARR TD(TD_MINUS_ARROW)
@@ -132,25 +135,23 @@ enum custom_keycodes {
 #define SAVE    C(KC_S)
 #define FIND    C(KC_F)
 
-const uint16_t PROGMEM tab_combo[] = { S_ALT, D_CTL, COMBO_END };
 const uint16_t PROGMEM esc_combo[] = { KC_W, KC_E, COMBO_END };
-const uint16_t PROGMEM del_combo[] = { KC_X, KC_C, COMBO_END };
+const uint16_t PROGMEM tab_combo[] = { S_ALT, D_CTL, COMBO_END };
+const uint16_t PROGMEM del_combo[] = { KC_O, KC_I, COMBO_END };
 const uint16_t PROGMEM ent_combo[] = { L_ALT, K_CTL, COMBO_END };
-const uint16_t PROGMEM bsp_combo[] = { KC_O, KC_I, COMBO_END };
 
 combo_t key_combos[COMBO_COUNT] = {
-    [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
     [COMBO_ESC] = COMBO(esc_combo, KC_ESC),
+    [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
     [COMBO_DEL] = COMBO(del_combo, KC_DEL),
     [COMBO_ENT] = COMBO(ent_combo, KC_ENT),
-    [COMBO_BSP] = COMBO(bsp_combo, KC_BSPC),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        KC_Q,    KC_W,    KC_E,    R_MOU,   KC_T,    KC_Y,    U_NUM,   KC_I,    KC_O,    KC_P,
+        KC_Q,    KC_W,    KC_E,    R_MOU,   KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         A_GUI,   S_ALT,   D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   L_ALT,   QUO_GUI,
-        Z_SCT,   KC_X,    KC_C,    V_FUN,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SCT,
+        Z_SCT,   X_ALT,   C_CTL,   V_FUN,   KC_B,    KC_N,    M_NUM,   COM_CTL, DOT_ALT, KC_SLSH,
         XXXXXXX, XXXXXXX, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  XXXXXXX, XXXXXXX
     ),
 
@@ -191,8 +192,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SHORTCUT] = LAYOUT(
         RESET,   KC_MUTE, KC_MNXT, KC_VOLU, KC_BRIU, VSC_NEW, KC_F12,  VSC_BAK, _______, VSC_CLA,
-        MOUSE,   _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_FEL, VSC_FED, VSC_FEU, VSC_FER, _______,
-        CG_SWAP, ANYCASE, CAPSWRD, SNKCASE, _______, VSC_MEL, VSC_MED, VSC_MEU, VSC_MER, CG_NORM,
+        _______, _______, KC_MPLY, KC_VOLD, KC_BRID, VSC_FEL, VSC_FED, VSC_FEU, VSC_FER, _______,
+        _______, _______, ANYCASE, CAPSWRD, SNKCASE, VSC_MEL, VSC_MED, VSC_MEU, VSC_MER, MOUSE,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
