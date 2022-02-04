@@ -3,7 +3,9 @@
 #include "casemodes.h"
 #include "swapper.h"
 
-enum layers { _QWERTY, _COLEMAK, _NUMBER, _SYMBOL, _NAVIGATION, _FUNCTION, _MOUSE, _SHORTCUT };
+enum layers { _QWERTY, _NUMBER, _SYMBOL, _NAVIGATION, _FUNCTION, _MOUSE, _SHORTCUT };
+
+enum combos { COMBO_ESC, COMBO_TAB, COMBO_DEL, COMBO_ENT };
 
 enum { TD_EQUAL_ARROW, TD_MINUS_ARROW, TD_LT_PHP, TD_GT_PHP };
 
@@ -71,9 +73,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 enum custom_keycodes {
-    QWERTY = SAFE_RANGE,
-    COLEMAK,
-    NORMAL,
+    NORMAL = SAFE_RANGE,
 
     SW_WIN,
 
@@ -147,19 +147,24 @@ enum custom_keycodes {
 #define SAVE    C(KC_S)
 #define FIND    C(KC_F)
 
+const uint16_t PROGMEM esc_combo[] = { KC_W, KC_E, COMBO_END };
+const uint16_t PROGMEM tab_combo[] = { KC_S, D_CTL, COMBO_END };
+const uint16_t PROGMEM del_combo[] = { KC_O, KC_I, COMBO_END };
+const uint16_t PROGMEM ent_combo[] = { KC_L, K_CTL, COMBO_END };
+
+combo_t key_combos[COMBO_COUNT] = {
+    [COMBO_ESC] = COMBO(esc_combo, KC_ESC),
+    [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
+    [COMBO_DEL] = COMBO(del_combo, KC_DEL),
+    [COMBO_ENT] = COMBO(ent_combo, KC_ENT),
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   KC_L,    QUO_SCT,
         Z_GUI,   X_ALT,   C_CTL,   V_FUN,   KC_B,    KC_N,    M_NUM,   COM_CTL, DOT_ALT, SLS_GUI,
-        QWERTY,  XXXXXXX, KC_ESC,  TAB_SFT, BSP_SFT, SPC_SFT, SPC_SFT, KC_ENT,  XXXXXXX, COLEMAK
-    ),
-
-    [_COLEMAK] = LAYOUT(
-        Q_MOU,   KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    QUO_SCT,
-        KC_A,    KC_R,    S_CTL,   T_NAV,   KC_G,    KC_M,    N_SYM,   E_CTL,   KC_I,    KC_O,
-        Z_GUI,   X_ALT,   C_CTL,   D_FUN,   KC_V,    KC_K,    H_NUM,   COM_CTL, DOT_ALT, SLS_GUI,
-        QWERTY,  XXXXXXX, KC_ESC,  TAB_SFT, BSP_SFT, SPC_SFT, SPC_SFT, KC_ENT,  XXXXXXX, COLEMAK
+        XXXXXXX, XXXXXXX, KC_ESC,  TAB_SFT, BSP_SFT, SPC_SFT, SPC_SFT, KC_ENT,  XXXXXXX, XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
@@ -214,18 +219,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     );
 
     switch (keycode) {
-        case QWERTY:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-
-        case COLEMAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK);
-            }
-            return false;
-
         case NORMAL:
             layer_clear();
             return false;
@@ -344,23 +337,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
-}
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case F_NAV:
-        case J_SYM:
-        case T_NAV:
-        case N_SYM:
-            return TAPPING_TERM - 50;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        default:
-            return true;
-    }
 }
