@@ -114,12 +114,8 @@ enum custom_keycodes {
 #define DOT_ALT LALT_T(KC_DOT)
 #define SLS_GUI LGUI_T(KC_SLSH)
 #define TAB_SFT LSFT_T(KC_TAB)
-#define BSP_SFT LSFT_T(KC_BSPC)
-#define SPC_SFT LSFT_T(KC_SPC)
 #define ENT_SFT LSFT_T(KC_ENT)
 #define N0_SFT  LSFT_T(KC_0)
-#define DOT_SFT LSFT_T(KC_DOT)
-#define GRV_SFT LSFT_T(KC_GRV)
 #define BSL_SFT LSFT_T(KC_BSLS)
 
 #define S_CTL   LCTL_T(KC_S)
@@ -129,11 +125,6 @@ enum custom_keycodes {
 #define MIN_ARR TD(TD_MINUS_ARROW)
 #define LT_PHP  TD(TD_LT_PHP)
 #define GT_PHP  TD(TD_GT_PHP)
-
-#define WS_LEFT LCA(KC_LEFT)
-#define WS_RGHT LCA(KC_RGHT)
-#define WSM_LFT MEH(KC_LEFT)
-#define WSM_RGT MEH(KC_RGHT)
 
 #define VSC_NEW MEH(KC_N)
 #define VSC_BAK LCA(KC_MINS)
@@ -164,27 +155,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   KC_L,    QUO_SCT,
         Z_GUI,   X_ALT,   C_CTL,   V_FUN,   KC_B,    KC_N,    M_NUM,   COM_CTL, DOT_ALT, SLS_GUI,
-        XXXXXXX, XXXXXXX, KC_ESC,  TAB_SFT, BSP_SFT, SPC_SFT, SPC_SFT, KC_ENT,  XXXXXXX, XXXXXXX
+        XXXXXXX, XXXXXXX, KC_ESC,  TAB_SFT, KC_BSPC, KC_SPC,  ENT_SFT, KC_DEL,  XXXXXXX, XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
         KC_SLSH, KC_7,    KC_8,    KC_9,    KC_MINS, _______, _______, _______, _______, _______,
         KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS, _______, _______, _______, _______, _______,
         KC_COLN, KC_1,    KC_2,    KC_3,    KC_EQL,  _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
-        _______, _______, _______, DOT_SFT, N0_SFT,  _______, _______, _______, _______, _______
+        _______, _______, KC_DOT,  N0_SFT,  _______, _______, _______, _______, _______, _______
     ),
 
     [_SYMBOL] = LAYOUT(
-        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, KC_AMPR, KC_EXLM, KC_CIRC,
-        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCTL, KC_AT,   KC_HASH,
+        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, KC_EXLM, KC_AT,   KC_CIRC,
+        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCTL, KC_AMPR, KC_HASH,
         KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR, _______, _______, KC_PERC, KC_LALT, KC_LGUI,
-        _______, _______, _______, GRV_SFT, BSL_SFT, _______, _______, _______, _______, _______
+        _______, _______, KC_GRV,  BSL_SFT, _______, _______, _______, _______, _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
         KC_ESC,  _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
-        _______, _______, KC_LCTL, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_WIN,
-        KC_LGUI, KC_LALT, _______, _______, _______, WSM_LFT, WS_LEFT, WS_RGHT, WSM_RGT, KC_DEL,
+        SW_WIN,  _______, KC_LCTL, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_ENT,
+        KC_LGUI, KC_LALT, _______, _______, _______, KC_TAB,  _______, _______, _______, KC_DEL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -199,7 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, KC_ESC,
         SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, SW_WIN,
         UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, NORMAL,
-        _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, KC_BTN1, _______, KC_BTN2, _______, _______
+        _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, KC_BTN1, KC_BTN2, KC_BTN3, _______, _______
     ),
 
     [_SHORTCUT] = LAYOUT(
