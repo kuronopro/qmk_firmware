@@ -10,6 +10,9 @@
 #define COMBO_TERM 30
 #define COMBO_COUNT 4
 
+#define ONESHOT_TAP_TOGGLE 3
+#define ONESHOT_TIMEOUT 3000
+
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
 
