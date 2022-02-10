@@ -94,10 +94,8 @@ enum custom_keycodes {
 
 #define F_NAV   LT(_NAVIGATION, KC_F)
 #define J_SYM   LT(_SYMBOL, KC_J)
-#define V_FUN   LT(_FUNCTION, KC_V)
-#define M_NUM   LT(_NUMBER, KC_M)
-#define D_FUN   LT(_FUNCTION, KC_D)
-#define H_NUM   LT(_NUMBER, KC_H)
+#define V_NUM   LT(_NUMBER, KC_V)
+#define M_FUN   LT(_FUNCTION, KC_M)
 #define Q_MOU   LT(_MOUSE, KC_Q)
 #define QUO_SCT LT(_SHORTCUT, KC_QUOT)
 #define MOUSE   TO(_MOUSE)
@@ -156,15 +154,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   KC_L,    QUO_SCT,
-        Z_GUI,   X_ALT,   C_CTL,   V_FUN,   KC_B,    KC_N,    M_NUM,   COM_CTL, DOT_ALT, SLS_GUI,
+        Z_GUI,   X_ALT,   C_CTL,   V_NUM,   KC_B,    KC_N,    M_FUN,   COM_CTL, DOT_ALT, SLS_GUI,
         OSM_CTL, OSM_GUI, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  OSM_ALT, OSM_SFT
     ),
 
     [_NUMBER] = LAYOUT(
-        KC_SLSH, KC_7,    KC_8,    KC_9,    KC_MINS, _______, _______, _______, _______, _______,
-        KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS, _______, _______, _______, _______, _______,
-        KC_COLN, KC_1,    KC_2,    KC_3,    KC_EQL,  _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
-        _______, _______, KC_DOT,  _______, N0_SFT,  _______, _______, _______, _______, _______
+        _______, _______, _______, _______, _______, KC_COLN, KC_7,    KC_8,    KC_9,    KC_EQL,
+        _______, _______, _______, _______, _______, KC_PLUS, KC_4,    KC_5,    KC_6,    KC_ASTR,
+        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_MINS, KC_1,    KC_2,    KC_3,    KC_SLSH,
+        _______, _______, _______, _______, _______, N0_SFT,  _______, KC_DOT,  _______, _______
     ),
 
     [_SYMBOL] = LAYOUT(
@@ -182,9 +180,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_FUNCTION] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_PSCR, KC_F9,   KC_F10,  KC_F11,  KC_F12,
-        _______, _______, _______, _______, _______, KC_INS,  KC_F5,   KC_F6,   KC_F7,   KC_F8,
-        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_CAPS, KC_F1,   KC_F2,   KC_F3,   KC_F4,
+        KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_PSCR,  _______, _______, _______, _______, _______,
+        KC_F5,   KC_F6,   KC_F7,   KC_F8,  KC_INS,   _______, _______, _______, _______, _______,
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_CAPS,  _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
