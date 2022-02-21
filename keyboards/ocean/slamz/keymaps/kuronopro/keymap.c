@@ -133,11 +133,6 @@ enum custom_keycodes {
 #define SAVE    C(KC_S)
 #define FIND    C(KC_F)
 
-#define OSM_CTL OSM(MOD_LCTL)
-#define OSM_GUI OSM(MOD_LGUI)
-#define OSM_ALT OSM(MOD_LALT)
-#define OSM_SFT OSM(MOD_LSFT)
-
 const uint16_t PROGMEM esc_combo[] = { KC_W, KC_E, COMBO_END };
 const uint16_t PROGMEM tab_combo[] = { KC_S, D_CTL, COMBO_END };
 const uint16_t PROGMEM del_combo[] = { KC_O, KC_I, COMBO_END };
@@ -155,13 +150,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   KC_L,    QUO_SCT,
         Z_GUI,   X_ALT,   C_CTL,   V_NUM,   KC_B,    KC_N,    M_FUN,   COM_CTL, DOT_ALT, SLS_GUI,
-        OSM_CTL, OSM_GUI, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  OSM_ALT, OSM_SFT
+        XXXXXXX, XXXXXXX, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  XXXXXXX, XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_COLN, KC_7,    KC_8,    KC_9,    KC_EQL,
-        _______, _______, _______, _______, _______, KC_PLUS, KC_4,    KC_5,    KC_6,    KC_ASTR,
-        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_MINS, KC_1,    KC_2,    KC_3,    KC_SLSH,
+        _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
+        _______, _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
+        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
         _______, _______, _______, _______, _______, N0_SFT,  _______, KC_DOT,  _______, _______
     ),
 
@@ -175,14 +170,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAVIGATION] = LAYOUT(
         KC_ESC,  _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
         SW_WIN,  _______, KC_LCTL, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_WIN,
-        KC_LGUI, KC_LALT, _______, _______, _______, KC_TAB,  KC_ENT,  _______, _______, KC_DEL,
+        KC_LGUI, KC_LALT, _______, _______, _______, KC_TAB,  KC_ENT,  _______, KC_APP,  KC_DEL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_FUNCTION] = LAYOUT(
-        KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_PSCR,  _______, _______, _______, _______, _______,
-        KC_F5,   KC_F6,   KC_F7,   KC_F8,  KC_INS,   _______, _______, _______, _______, _______,
-        KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_CAPS,  _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_F11,  KC_F12,  _______,  KC_INS, KC_PSCR, _______, _______, _______, _______, _______,
+        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, _______, _______, _______, KC_CAPS,
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
