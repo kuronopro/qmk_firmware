@@ -103,14 +103,14 @@ enum custom_keycodes {
 #define T_NAV   LT(_NAVIGATION, KC_T)
 #define N_SYM   LT(_SYMBOL, KC_N)
 
-#define D_CTL   LCTL_T(KC_D)
-#define K_CTL   LCTL_T(KC_K)
-#define Z_GUI   LGUI_T(KC_Z)
-#define X_ALT   LALT_T(KC_X)
-#define C_CTL   LCTL_T(KC_C)
-#define COM_CTL LCTL_T(KC_COMM)
-#define DOT_ALT LALT_T(KC_DOT)
-#define SLS_GUI LGUI_T(KC_SLSH)
+#define D_CMD   LCMD_T(KC_D)
+#define K_CMD   LCMD_T(KC_K)
+#define Z_CTL   LCTL_T(KC_Z)
+#define X_OPT   LOPT_T(KC_X)
+#define C_CMD   LCMD_T(KC_C)
+#define COM_CMD LCMD_T(KC_COMM)
+#define DOT_OPT LOPT_T(KC_DOT)
+#define SLS_CTL LCTL_T(KC_SLSH)
 #define BSP_SFT LSFT_T(KC_BSPC)
 #define SPC_SFT LSFT_T(KC_SPC)
 #define N0_SFT  LSFT_T(KC_0)
@@ -121,22 +121,22 @@ enum custom_keycodes {
 #define LT_PHP  TD(TD_LT_PHP)
 #define GT_PHP  TD(TD_GT_PHP)
 
-#define VSC_NEW MEH(KC_N)
-#define VSC_BAK LCA(KC_MINS)
+#define VSC_NEW LAG(KC_N)
+#define VSC_BAK LCTL(KC_MINS)
 
-#define UNDO    C(KC_Z)
-#define CUT     C(KC_X)
-#define COPY    C(KC_C)
-#define PASTE   C(KC_V)
-#define REDO    C(KC_Y)
-#define SEL_ALL C(KC_A)
-#define SAVE    C(KC_S)
-#define FIND    C(KC_F)
+#define UNDO    LCMD(KC_Z)
+#define CUT     LCMD(KC_X)
+#define COPY    LCMD(KC_C)
+#define PASTE   LCMD(KC_V)
+#define REDO    SCMD(KC_Z)
+#define SEL_ALL LCMD(KC_A)
+#define SAVE    LCMD(KC_S)
+#define FIND    LCMD(KC_F)
 
 const uint16_t PROGMEM esc_combo[] = { KC_W, KC_E, COMBO_END };
-const uint16_t PROGMEM tab_combo[] = { KC_S, D_CTL, COMBO_END };
+const uint16_t PROGMEM tab_combo[] = { KC_S, D_CMD, COMBO_END };
 const uint16_t PROGMEM del_combo[] = { KC_O, KC_I, COMBO_END };
-const uint16_t PROGMEM ent_combo[] = { KC_L, K_CTL, COMBO_END };
+const uint16_t PROGMEM ent_combo[] = { KC_L, K_CMD, COMBO_END };
 
 combo_t key_combos[COMBO_COUNT] = {
     [COMBO_ESC] = COMBO(esc_combo, KC_ESC),
@@ -148,41 +148,41 @@ combo_t key_combos[COMBO_COUNT] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        KC_A,    KC_S,    D_CTL,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CTL,   KC_L,    QUO_SCT,
-        Z_GUI,   X_ALT,   C_CTL,   V_NUM,   KC_B,    KC_N,    M_FUN,   COM_CTL, DOT_ALT, SLS_GUI,
+        KC_A,    KC_S,    D_CMD,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CMD,   KC_L,    QUO_SCT,
+        Z_CTL,   X_OPT,   C_CMD,   V_NUM,   KC_B,    KC_N,    M_FUN,   COM_CMD, DOT_OPT, SLS_CTL,
         XXXXXXX, XXXXXXX, KC_TAB,  XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, KC_ENT,  XXXXXXX, XXXXXXX
     ),
 
     [_NUMBER] = LAYOUT(
         _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
         _______, _______, _______, _______, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
-        KC_LGUI, KC_LALT, KC_LCTL, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
         _______, _______, _______, _______, _______, N0_SFT,  _______, KC_DOT,  _______, _______
     ),
 
     [_SYMBOL] = LAYOUT(
         KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, KC_EXLM, KC_AT,   KC_CIRC,
-        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCTL, KC_AMPR, KC_HASH,
-        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR, _______, _______, KC_PERC, KC_LALT, KC_LGUI,
+        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCMD, KC_AMPR, KC_HASH,
+        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR, _______, _______, KC_PERC, KC_LOPT, KC_LCTL,
         _______, _______, KC_GRV,  _______, BSL_SFT, _______, _______, _______, _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
         KC_ESC,  _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
-        SW_WIN,  _______, KC_LCTL, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_WIN,
-        KC_LGUI, KC_LALT, _______, _______, _______, KC_TAB,  KC_ENT,  _______, KC_APP,  KC_DEL,
+        SW_WIN,  _______, KC_LCMD, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_WIN,
+        KC_LCTL, KC_LOPT, _______, _______, _______, KC_TAB,  KC_ENT,  _______, KC_APP,  KC_DEL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_FUNCTION] = LAYOUT(
         KC_F11,  KC_F12,  _______,  KC_INS, KC_PSCR, _______, _______, _______, _______, _______,
         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, _______, _______, _______, KC_CAPS,
-        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, KC_LCTL, KC_LALT, KC_LGUI,
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, KC_LCMD, KC_LOPT, KC_LCTL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_MOUSE] = LAYOUT(
-        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, KC_ESC,
+        KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, KC_WH_U, KC_WH_L, KC_MS_U, KC_WH_R, KC_ESC,
         SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, SW_WIN,
         UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, NORMAL,
         _______, _______, KC_BTN2, _______, KC_BTN1, KC_BTN1, _______, KC_BTN2, _______, _______
@@ -200,7 +200,7 @@ bool sw_win_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     update_swapper(
-        &sw_win_active, KC_LALT, KC_TAB, SW_WIN,
+        &sw_win_active, KC_LCMD, KC_TAB, SW_WIN,
         keycode, record
     );
 
@@ -229,91 +229,91 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case VSC_CLA:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
                 tap_code(KC_W);
             } else {
-                unregister_code(KC_LCTL);
+                unregister_code(KC_LCMD);
             }
             break;
         case VSC_FEL:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
                 tap_code(KC_LEFT);
             } else {
-                unregister_code(KC_LCTL);
+                unregister_code(KC_LCMD);
             }
             break;
         case VSC_FER:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
                 tap_code(KC_RGHT);
             } else {
-                unregister_code(KC_LCTL);
+                unregister_code(KC_LCMD);
             }
             break;
         case VSC_FEU:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
                 tap_code(KC_UP);
             } else {
-                unregister_code(KC_LCTL);
+                unregister_code(KC_LCMD);
             }
             break;
         case VSC_FED:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
                 tap_code(KC_DOWN);
             } else {
-                unregister_code(KC_LCTL);
+                unregister_code(KC_LCMD);
             }
             break;
         case VSC_MEL:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
-                register_code(KC_LSFT);
+                register_code(KC_LCTL);
                 tap_code(KC_LEFT);
             } else {
+                unregister_code(KC_LCMD);
                 unregister_code(KC_LCTL);
-                unregister_code(KC_LSFT);
             }
             break;
         case VSC_MER:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
-                register_code(KC_LSFT);
+                register_code(KC_LCTL);
                 tap_code(KC_RGHT);
             } else {
+                unregister_code(KC_LCMD);
                 unregister_code(KC_LCTL);
-                unregister_code(KC_LSFT);
             }
             break;
         case VSC_MEU:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
-                register_code(KC_LSFT);
+                register_code(KC_LCTL);
                 tap_code(KC_UP);
             } else {
+                unregister_code(KC_LCMD);
                 unregister_code(KC_LCTL);
-                unregister_code(KC_LSFT);
             }
             break;
         case VSC_MED:
             if (record->event.pressed) {
-                register_code(KC_LCTL);
+                register_code(KC_LCMD);
                 tap_code(KC_K);
-                register_code(KC_LSFT);
+                register_code(KC_LCTL);
                 tap_code(KC_DOWN);
             } else {
+                unregister_code(KC_LCMD);
                 unregister_code(KC_LCTL);
-                unregister_code(KC_LSFT);
             }
             break;
     }
