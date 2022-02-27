@@ -1,17 +1,13 @@
 #pragma once
 
-#undef TAPPING_TERM
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
-#define PERMISSIVE_HOLD
-#define PERMISSIVE_HOLD_PER_KEY
 
 #define COMBO_TERM 30
 #define COMBO_COUNT 4
 
-#define ONESHOT_TAP_TOGGLE 3
-#define ONESHOT_TIMEOUT 3000
+#define CAPSWORD_USE_SHIFT
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
