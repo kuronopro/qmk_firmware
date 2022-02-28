@@ -83,6 +83,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define PASTE   G(KC_V)
 #define REDO    G(S(KC_Z))
 #define FIND    G(KC_F)
+#define WS_LEFT C(KC_LEFT)
+#define WS_RGHT C(KC_RGHT)
+#define MS_CTRL C(KC_UP)
+#define SPTLGHT G(KC_SPC)
 
 #define CMDK    G(KC_K)
 
@@ -94,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         A_CTL,   S_OPT,   D_CMD,   F_NAV,   KC_G,    KC_H,    J_NSYM,  K_CMD,   L_OPT,   QUO_CTL,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        XXXXXXX, XXXXXXX, TAB_MOU, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, XXXXXXX, XXXXXXX
+        WS_LEFT, MS_CTRL, TAB_MOU, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, SPTLGHT, WS_RGHT
     ),
 
     [_NUMBER_SYMBOL] = LAYOUT(
@@ -116,7 +120,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, _______,
         UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, KC_BTN1, _______, KC_BTN2, _______, _______
-
     ),
 
     [_FUNCTION] = LAYOUT(
