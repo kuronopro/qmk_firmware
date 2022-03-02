@@ -5,7 +5,7 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 
 #define COMBO_TERM 30
-#define COMBO_COUNT 4
+#define COMBO_COUNT 5
 
 #define CAPSWORD_USE_SHIFT
 
