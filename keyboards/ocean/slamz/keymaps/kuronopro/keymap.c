@@ -3,7 +3,8 @@
 #include "casemodes.h"
 
 enum layers {
-    _BASE,
+    _QWERTY,
+    _COLEMAK,
     _SYMBOL,
     _NUMBER,
     _NAVIGATION,
@@ -13,6 +14,8 @@ enum layers {
 
 enum custom_keycodes {
     NORMAL = SAFE_RANGE,
+    QWERTY,
+    COLEMAK,
     CAPSWRD,
     SNKCASE,
     KBBCASE
@@ -23,7 +26,10 @@ enum combos {
     COMBO_TAB,
     COMBO_DEL,
     COMBO_ENT,
-    COMBO_BSPC
+    COMBO_ESC_COLEMAK,
+    COMBO_TAB_COLEMAK,
+    COMBO_DEL_COLEMAK,
+    COMBO_ENT_COLEMAK
 };
 
 enum {
@@ -199,11 +205,22 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define N0_SFT  LSFT_T(KC_0)
 #define BSL_SFT LSFT_T(KC_BSLS)
 
+#define A_CTL   LCTL_T(KC_A)
+#define R_OPT   LOPT_T(KC_R)
+#define S_CMD   LCMD_T(KC_S)
+#define E_CMD   LCMD_T(KC_E)
+#define I_OPT   LOPT_T(KC_I)
+#define O_CTL   LCTL_T(KC_O)
+
+#define Q_MOU   LT(_MOUSE, KC_Q)
 #define F_NAV   LT(_NAVIGATION, KC_F)
 #define J_SYM   LT(_SYMBOL, KC_J)
 #define TAB_NUM LT(_NUMBER, KC_TAB)
 #define ENT_FUN LT(_FUNCTION, KC_ENT)
 #define MOUSE   TO(_MOUSE)
+
+#define T_NAV   LT(_NAVIGATION, KC_T)
+#define N_SYM   LT(_SYMBOL, KC_N)
 
 #define SEL_ALL G(KC_A)
 #define SAVE    G(KC_S)
@@ -224,10 +241,17 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define VSC_DWN TD(TD_VSCODE_EDITOR_DOWN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_BASE] = LAYOUT(
-        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+    [_QWERTY] = LAYOUT(
+        Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         A_CTL,   S_OPT,   D_CMD,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
+        KC_LEFT, KC_DOWN, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, KC_UP,   KC_RGHT
+    ),
+
+    [_COLEMAK] = LAYOUT(
+        Q_MOU,   KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
+        A_CTL,   R_OPT,   S_CMD,   T_NAV,   KC_G,    KC_M,    N_SYM,   E_CMD,   I_OPT,   O_CTL,
+        KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,
         KC_LEFT, KC_DOWN, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, KC_UP,   KC_RGHT
     ),
 
@@ -255,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FUNCTION] = LAYOUT(
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   RESET,   _______, CAPSWRD, SNKCASE, KBBCASE,
         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_F19,  KC_LCMD, KC_LOPT, KC_LCTL,
-        KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  _______, _______, _______, _______, MOUSE,
+        KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  _______, _______, QWERTY,  COLEMAK, MOUSE,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -268,23 +292,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 const uint16_t PROGMEM esc_combo[] = { KC_W, KC_E, KC_R, COMBO_END };
-const uint16_t PROGMEM tab_combo[] = { S_OPT, D_CMD, F_NAV, COMBO_END };
-const uint16_t PROGMEM del_combo[] = { KC_M, KC_COMM, KC_DOT, COMBO_END };
-const uint16_t PROGMEM ent_combo[] = { J_SYM, K_CMD, L_OPT, COMBO_END };
-const uint16_t PROGMEM bspc_combo[] = { KC_U, KC_I, KC_O, COMBO_END };
+const uint16_t PROGMEM tab_combo[] = { KC_X, KC_C, KC_V, COMBO_END };
+const uint16_t PROGMEM del_combo[] = { KC_U, KC_I, KC_O, COMBO_END };
+const uint16_t PROGMEM ent_combo[] = { KC_M, KC_COMM, KC_DOT, COMBO_END };
+const uint16_t PROGMEM esc_combo_colemak[] = { KC_W, KC_F, KC_P, COMBO_END };
+const uint16_t PROGMEM tab_combo_colemak[] = { KC_X, KC_C, KC_D, COMBO_END };
+const uint16_t PROGMEM del_combo_colemak[] = { KC_L, KC_U, KC_Y, COMBO_END };
+const uint16_t PROGMEM ent_combo_colemak[] = { KC_H, KC_COMM, KC_DOT, COMBO_END };
 
 combo_t key_combos[COMBO_COUNT] = {
     [COMBO_ESC] = COMBO(esc_combo, KC_ESC),
     [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
     [COMBO_DEL] = COMBO(del_combo, KC_DEL),
     [COMBO_ENT] = COMBO(ent_combo, KC_ENT),
-    [COMBO_BSPC] = COMBO(bspc_combo, KC_BSPC)
+    [COMBO_ESC_COLEMAK] = COMBO(esc_combo_colemak, KC_ESC),
+    [COMBO_TAB_COLEMAK] = COMBO(tab_combo_colemak, KC_TAB),
+    [COMBO_DEL_COLEMAK] = COMBO(del_combo_colemak, KC_DEL),
+    [COMBO_ENT_COLEMAK] = COMBO(ent_combo_colemak, KC_ENT)
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case NORMAL:
             layer_clear();
+            return false;
+
+        case QWERTY:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY);
+            }
+            return false;
+        
+        case COLEMAK:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_COLEMAK);
+            }
             return false;
 
         case CAPSWRD:
