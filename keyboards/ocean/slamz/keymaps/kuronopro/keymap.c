@@ -214,12 +214,15 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #define Q_MOU   LT(_MOUSE, KC_Q)
 #define F_NAV   LT(_NAVIGATION, KC_F)
+#define G_NUM   LT(_NUMBER, KC_G)
+#define H_FUN   LT(_FUNCTION, KC_H)
 #define J_SYM   LT(_SYMBOL, KC_J)
 #define TAB_NUM LT(_NUMBER, KC_TAB)
 #define ENT_FUN LT(_FUNCTION, KC_ENT)
 #define MOUSE   TO(_MOUSE)
 
 #define T_NAV   LT(_NAVIGATION, KC_T)
+#define M_FUN   LT(_FUNCTION, KC_M)
 #define N_SYM   LT(_SYMBOL, KC_N)
 
 #define SEL_ALL G(KC_A)
@@ -243,16 +246,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        A_CTL,   S_OPT,   D_CMD,   F_NAV,   KC_G,    KC_H,    J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
+        A_CTL,   S_OPT,   D_CMD,   F_NAV,   G_NUM,   H_FUN,   J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_LEFT, KC_DOWN, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, KC_UP,   KC_RGHT
+        KC_ESC,  _______, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, _______, KC_DEL
     ),
 
     [_COLEMAK] = LAYOUT(
         Q_MOU,   KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
-        A_CTL,   R_OPT,   S_CMD,   T_NAV,   KC_G,    KC_M,    N_SYM,   E_CMD,   I_OPT,   O_CTL,
+        A_CTL,   R_OPT,   S_CMD,   T_NAV,   G_NUM,   M_FUN,   N_SYM,   E_CMD,   I_OPT,   O_CTL,
         KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_LEFT, KC_DOWN, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, KC_UP,   KC_RGHT
+        KC_ESC,  _______, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, _______, KC_DEL
     ),
 
     [_SYMBOL] = LAYOUT(
@@ -263,16 +266,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUMBER] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
-        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
-        _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
+        _______, _______, _______, _______, _______, KC_COLN, KC_7,    KC_8,    KC_9,    KC_EQL,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_PLUS, KC_4,    KC_5,    KC_6,    KC_ASTR,
+        _______, _______, _______, _______, _______, KC_MINS, KC_1,    KC_2,    KC_3,    KC_SLSH,
         _______, _______, _______, _______, _______, N0_SFT,  _______, KC_DOT,  _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
         _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC, 
         KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL, 
-        _______, _______, _______, _______, _______, VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, _______,
+        _______, _______, _______, _______, _______, VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, KC_ENT,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
