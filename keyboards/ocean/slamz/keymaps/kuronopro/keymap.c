@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 
-#include "casemodes.h"
+#include "features/casemodes.h"
+#include "features/autocorrection.h"
+#include "features/select_word.h"
 
 enum layers {
     _QWERTY,
@@ -18,7 +20,8 @@ enum custom_keycodes {
     COLEMAK,
     CAPSWRD,
     SNKCASE,
-    KBBCASE
+    KBBCASE,
+    SELWORD
 };
 
 enum combos {
@@ -266,16 +269,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUMBER] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_COLN, KC_7,    KC_8,    KC_9,    KC_EQL,
-        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_PLUS, KC_4,    KC_5,    KC_6,    KC_ASTR,
-        _______, _______, _______, _______, _______, KC_MINS, KC_1,    KC_2,    KC_3,    KC_SLSH,
+        _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
+        _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
         _______, _______, _______, _______, _______, N0_SFT,  _______, KC_DOT,  _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC, 
+        KC_ESC,  _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
         KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL, 
-        _______, _______, _______, _______, _______, VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, KC_ENT,
+        _______, _______, _______, _______, _______, VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, SELWORD,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -315,6 +318,9 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_autocorrection(keycode, record)) { return false; }
+    if (!process_select_word(keycode, record, SELWORD)) { return false; }
+    
     switch (keycode) {
         case NORMAL:
             layer_clear();
@@ -359,9 +365,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
+    switch (keycode) { 
         case J_SYM:
-            return TAPPING_TERM - 50; 
+        case N_SYM:
+        case G_NUM:
+            return TAPPING_TERM - 50;
         case BSP_SFT:
         case SPC_SFT:
             return TAPPING_TERM + 15;
@@ -371,5 +379,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 50;
         default:
             return TAPPING_TERM;
+    }
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case J_SYM:
+        case N_SYM:
+        case G_NUM:
+            // Immediately select the hold action when another key is tapped.
+            return true;
+        default:
+            // Do not select the hold action when another key is tapped.
+            return false;
     }
 }
