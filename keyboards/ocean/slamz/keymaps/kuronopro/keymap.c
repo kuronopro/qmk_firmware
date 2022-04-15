@@ -225,7 +225,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define MOUSE   TO(_MOUSE)
 
 #define T_NAV   LT(_NAVIGATION, KC_T)
-#define M_FUN   LT(_FUNCTION, KC_M)
 #define N_SYM   LT(_SYMBOL, KC_N)
 
 #define SEL_ALL G(KC_A)
@@ -256,8 +255,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_COLEMAK] = LAYOUT(
         Q_MOU,   KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
-        A_CTL,   R_OPT,   S_CMD,   T_NAV,   G_NUM,   M_FUN,   N_SYM,   E_CMD,   I_OPT,   O_CTL,
-        KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,
+        A_CTL,   R_OPT,   S_CMD,   T_NAV,   G_NUM,   H_FUN,   N_SYM,   E_CMD,   I_OPT,   O_CTL,
+        KC_Z,    KC_X,    KC_V,    KC_C,    KC_D,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
         KC_ESC,  _______, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, _______, KC_DEL
     ),
 
@@ -297,14 +296,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-const uint16_t PROGMEM esc_combo[] = { KC_W, KC_E, KC_R, COMBO_END };
-const uint16_t PROGMEM tab_combo[] = { KC_X, KC_C, KC_V, COMBO_END };
-const uint16_t PROGMEM del_combo[] = { KC_U, KC_I, KC_O, COMBO_END };
-const uint16_t PROGMEM ent_combo[] = { KC_M, KC_COMM, KC_DOT, COMBO_END };
-const uint16_t PROGMEM esc_combo_colemak[] = { KC_W, KC_F, KC_P, COMBO_END };
-const uint16_t PROGMEM tab_combo_colemak[] = { KC_X, KC_C, KC_D, COMBO_END };
-const uint16_t PROGMEM del_combo_colemak[] = { KC_L, KC_U, KC_Y, COMBO_END };
-const uint16_t PROGMEM ent_combo_colemak[] = { KC_H, KC_COMM, KC_DOT, COMBO_END };
+const uint16_t PROGMEM esc_combo[] = { KC_X, KC_C, COMBO_END };
+const uint16_t PROGMEM tab_combo[] = { KC_C, KC_V, COMBO_END };
+const uint16_t PROGMEM del_combo[] = { KC_COMM, KC_DOT, COMBO_END };
+const uint16_t PROGMEM ent_combo[] = { KC_M, KC_COMM, COMBO_END };
+const uint16_t PROGMEM esc_combo_colemak[] = { KC_X, KC_V, COMBO_END };
+const uint16_t PROGMEM tab_combo_colemak[] = { KC_V, KC_C, COMBO_END };
+const uint16_t PROGMEM del_combo_colemak[] = { KC_COMM, KC_DOT, COMBO_END };
+const uint16_t PROGMEM ent_combo_colemak[] = { KC_M, KC_COMM, COMBO_END };
 
 combo_t key_combos[COMBO_COUNT] = {
     [COMBO_ESC] = COMBO(esc_combo, KC_ESC),
