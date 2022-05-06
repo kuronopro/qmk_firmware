@@ -6,7 +6,6 @@
 
 enum layers {
     _QWERTY,
-    _COLEMAK,
     _SYMBOL,
     _NUMBER,
     _NAVIGATION,
@@ -16,23 +15,10 @@ enum layers {
 
 enum custom_keycodes {
     NORMAL = SAFE_RANGE,
-    QWERTY,
-    COLEMAK,
     CAPSWRD,
     SNKCASE,
     KBBCASE,
     SELWORD
-};
-
-enum combos {
-    COMBO_ESC,
-    COMBO_TAB,
-    COMBO_DEL,
-    COMBO_ENT,
-    COMBO_ESC_COLEMAK,
-    COMBO_TAB_COLEMAK,
-    COMBO_DEL_COLEMAK,
-    COMBO_ENT_COLEMAK
 };
 
 enum {
@@ -208,24 +194,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define N0_SFT  LSFT_T(KC_0)
 #define BSL_SFT LSFT_T(KC_BSLS)
 
-#define A_CTL   LCTL_T(KC_A)
-#define R_OPT   LOPT_T(KC_R)
-#define S_CMD   LCMD_T(KC_S)
-#define E_CMD   LCMD_T(KC_E)
-#define I_OPT   LOPT_T(KC_I)
-#define O_CTL   LCTL_T(KC_O)
-
 #define Q_MOU   LT(_MOUSE, KC_Q)
 #define F_NAV   LT(_NAVIGATION, KC_F)
 #define G_NUM   LT(_NUMBER, KC_G)
 #define H_FUN   LT(_FUNCTION, KC_H)
 #define J_SYM   LT(_SYMBOL, KC_J)
-#define TAB_NUM LT(_NUMBER, KC_TAB)
-#define ENT_FUN LT(_FUNCTION, KC_ENT)
+#define TAB_FUN LT(_FUNCTION, KC_TAB)
+#define ENT_NAV LT(_NAVIGATION, KC_ENT)
 #define MOUSE   TO(_MOUSE)
-
-#define T_NAV   LT(_NAVIGATION, KC_T)
-#define N_SYM   LT(_SYMBOL, KC_N)
 
 #define SEL_ALL G(KC_A)
 #define SAVE    G(KC_S)
@@ -246,75 +222,121 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define VSC_DWN TD(TD_VSCODE_EDITOR_DOWN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_QWERTY] = LAYOUT(
-        Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        A_CTL,   S_OPT,   D_CMD,   F_NAV,   G_NUM,   H_FUN,   J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
-        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_ESC,  _______, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, _______, KC_DEL
+    [_QWERTY] = LAYOUT_kuronopro(
+        Q_MOU,   KC_W,    KC_E,    KC_R,    KC_T,           KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+        A_CTL,   S_OPT,   D_CMD,   F_NAV,   G_NUM,          H_FUN,   J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
+        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,           KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
+                          TAB_FUN,          BSP_SFT,        SPC_SFT,          ENT_NAV
     ),
 
-    [_COLEMAK] = LAYOUT(
-        Q_MOU,   KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
-        A_CTL,   R_OPT,   S_CMD,   T_NAV,   G_NUM,   H_FUN,   N_SYM,   E_CMD,   I_OPT,   O_CTL,
-        KC_Z,    KC_X,    KC_V,    KC_C,    KC_D,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_ESC,  _______, TAB_NUM, XXXXXXX, BSP_SFT, SPC_SFT, XXXXXXX, ENT_FUN, _______, KC_DEL
+    [_SYMBOL] = LAYOUT_kuronopro(
+        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN,        _______, _______, KC_EXLM, KC_AT,   KC_HASH,
+        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN,        _______, _______, KC_LCMD, KC_LOPT, KC_LCTL,
+        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR,        _______, _______, KC_PERC, KC_AMPR, KC_CIRC,
+                          KC_GRV,           BSL_SFT,        _______,          _______
     ),
 
-    [_SYMBOL] = LAYOUT(
-        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, _______, _______, KC_EXLM, KC_AT,   KC_HASH,
-        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, _______, _______, KC_LCMD, KC_LOPT, KC_LCTL,
-        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR, _______, _______, KC_PERC, KC_AMPR, KC_CIRC,
-        _______, _______, KC_GRV,  _______, BSL_SFT, _______, _______, _______, _______, _______
+    [_NUMBER] = LAYOUT_kuronopro(
+        _______, _______, _______, _______, _______,        KC_7,    KC_8,    KC_9,    KC_EQL,  KC_COLN,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______,        KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
+        _______, _______, _______, _______, _______,        KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
+                          _______,          _______,        N0_SFT,           KC_DOT
     ),
 
-    [_NUMBER] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
-        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
-        _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
-        _______, _______, _______, _______, _______, N0_SFT,  _______, KC_DOT,  _______, _______
+    [_NAVIGATION] = LAYOUT_kuronopro(
+        KC_ESC,  _______, _______, _______, _______,        KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______,        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL, 
+        _______, _______, _______, _______, _______,        VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, SELWORD,
+                          _______,          _______,        _______,          _______
     ),
 
-    [_NAVIGATION] = LAYOUT(
-        KC_ESC,  _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
-        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL, 
-        _______, _______, _______, _______, _______, VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, SELWORD,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    [_FUNCTION] = LAYOUT_kuronopro(
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,          RESET,   _______, CAPSWRD, SNKCASE, KBBCASE,
+        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,         _______, KC_F19,  KC_LCMD, KC_LOPT, KC_LCTL,
+        KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,         _______, _______, _______, _______, MOUSE,
+                          _______,          _______,        _______,          _______
     ),
 
-    [_FUNCTION] = LAYOUT(
-        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   RESET,   _______, CAPSWRD, SNKCASE, KBBCASE,
-        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_F19,  KC_LCMD, KC_LOPT, KC_LCTL,
-        KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  _______, _______, QWERTY,  COLEMAK, MOUSE,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-
-    [_MOUSE] = LAYOUT(
-        KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, KC_WH_D, KC_WH_R, KC_MS_U, KC_WH_L, KC_ESC,
-        SEL_ALL, SAVE,    _______, FIND,    _______, KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______,
-        UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, _______, NORMAL,
-        _______, _______, KC_BTN2, _______, KC_BTN1, KC_BTN1, _______, KC_BTN2, _______, _______
+    [_MOUSE] = LAYOUT_kuronopro(
+        KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______,        KC_WH_D, KC_WH_R, KC_MS_U, KC_WH_L, KC_ESC,
+        SEL_ALL, SAVE,    _______, FIND,    _______,        KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______,
+        UNDO,    CUT,     COPY,    PASTE,   REDO,           _______, _______, _______, _______, NORMAL,
+                          KC_BTN2,          KC_BTN1,        KC_BTN1,          KC_BTN2
     )
 };
+
+enum combo_events {
+    COMBO_ESC,
+    COMBO_TAB,
+    COMBO_DEL,
+    COMBO_ENT,
+    COMBO_UNDO,
+    COMBO_REDO,
+    COMBO_COPY,
+    COMBO_PASTE,
+    COMBO_LENGTH
+};
+
+uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM esc_combo[] = { KC_X, KC_C, COMBO_END };
 const uint16_t PROGMEM tab_combo[] = { KC_C, KC_V, COMBO_END };
 const uint16_t PROGMEM del_combo[] = { KC_COMM, KC_DOT, COMBO_END };
 const uint16_t PROGMEM ent_combo[] = { KC_M, KC_COMM, COMBO_END };
-const uint16_t PROGMEM esc_combo_colemak[] = { KC_X, KC_V, COMBO_END };
-const uint16_t PROGMEM tab_combo_colemak[] = { KC_V, KC_C, COMBO_END };
-const uint16_t PROGMEM del_combo_colemak[] = { KC_COMM, KC_DOT, COMBO_END };
-const uint16_t PROGMEM ent_combo_colemak[] = { KC_M, KC_COMM, COMBO_END };
+const uint16_t PROGMEM undo_combo[] = { KC_Z, KC_X, COMBO_END };
+const uint16_t PROGMEM redo_combo[] = { KC_DOT, KC_SLSH, COMBO_END };
+const uint16_t PROGMEM copy_combo[] = { KC_V, KC_B, COMBO_END };
+const uint16_t PROGMEM paste_combo[] = { KC_N, KC_M, COMBO_END };
 
-combo_t key_combos[COMBO_COUNT] = {
+combo_t key_combos[] = {
     [COMBO_ESC] = COMBO(esc_combo, KC_ESC),
     [COMBO_TAB] = COMBO(tab_combo, KC_TAB),
     [COMBO_DEL] = COMBO(del_combo, KC_DEL),
     [COMBO_ENT] = COMBO(ent_combo, KC_ENT),
-    [COMBO_ESC_COLEMAK] = COMBO(esc_combo_colemak, KC_ESC),
-    [COMBO_TAB_COLEMAK] = COMBO(tab_combo_colemak, KC_TAB),
-    [COMBO_DEL_COLEMAK] = COMBO(del_combo_colemak, KC_DEL),
-    [COMBO_ENT_COLEMAK] = COMBO(ent_combo_colemak, KC_ENT)
+    [COMBO_UNDO] = COMBO_ACTION(undo_combo),
+    [COMBO_REDO] = COMBO_ACTION(redo_combo),
+    [COMBO_COPY] = COMBO_ACTION(copy_combo),
+    [COMBO_PASTE] = COMBO_ACTION(paste_combo)
 };
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch(combo_index) {
+        case COMBO_UNDO:
+            if (pressed) {
+                register_code(KC_LCMD);
+                tap_code(KC_Z);
+            } else {
+                unregister_code(KC_LCMD);
+            }
+            break;
+        case COMBO_REDO:
+            if (pressed) {
+                register_code(KC_LCMD);
+                register_code(KC_LSFT);
+                tap_code(KC_Z);
+            } else {
+                unregister_code(KC_LCMD);
+                unregister_code(KC_LSFT);
+            }
+            break;
+        case COMBO_COPY:
+            if (pressed) {
+                register_code(KC_LCMD);
+                tap_code(KC_C);
+            } else {
+                unregister_code(KC_LCMD);
+            }
+            break;
+        case COMBO_PASTE:
+            if (pressed) {
+                register_code(KC_LCMD);
+                tap_code(KC_V);
+            } else {
+                unregister_code(KC_LCMD);
+            }
+            break;
+    }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_autocorrection(keycode, record)) { return false; }
@@ -323,18 +345,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case NORMAL:
             layer_clear();
-            return false;
-
-        case QWERTY:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-        
-        case COLEMAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK);
-            }
             return false;
 
         case CAPSWRD:
@@ -366,7 +376,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) { 
         case J_SYM:
-        case N_SYM:
         case G_NUM:
             return TAPPING_TERM - 50;
         case BSP_SFT:
@@ -384,7 +393,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case J_SYM:
-        case N_SYM:
         case G_NUM:
             // Immediately select the hold action when another key is tapped.
             return true;
