@@ -2,3 +2,4 @@ isntall -> install
 fucntion -> function
 reulst -> result
 reuslt -> result
+isntant -> instant
