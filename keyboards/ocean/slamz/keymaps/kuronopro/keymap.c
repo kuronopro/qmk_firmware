@@ -24,35 +24,6 @@ enum custom_keycodes {
     SW_APP
 };
 
-// Mod tap
-#define A_CTL   LCTL_T(KC_A)
-#define S_OPT   LOPT_T(KC_S)
-#define D_CMD   LCMD_T(KC_D)
-#define K_CMD   LCMD_T(KC_K)
-#define L_OPT   LOPT_T(KC_L)
-#define QUO_CTL LCTL_T(KC_QUOT)
-#define BSP_SFT LSFT_T(KC_BSPC)
-#define SPC_SFT LSFT_T(KC_SPC)
-#define BSL_SFT LSFT_T(KC_BSLS)
-#define N0_SFT  LSFT_T(KC_0)
-
-// Layer tap etc
-#define Q_MOUS  LT(_MOUSE, KC_Q)
-#define F_NAV   LT(_NAVIGATION, KC_F)
-#define V_NUM   LT(_NUMBER, KC_V)
-#define M_FUN   LT(_FUNCTION, KC_M)
-#define J_SYM   LT(_SYMBOL, KC_J)
-#define TO_MOUS TO(_MOUSE)
-
-// Shortcut
-#define UNDO    G(KC_Z)
-#define CUT     G(KC_X)
-#define COPY    G(KC_C)
-#define PASTE   G(KC_V)
-#define REDO    G(S(KC_Z))
-#define SPC_LFT C(KC_LEFT)
-#define SPC_RGT C(KC_RGHT)
-
 // Tap dance
 enum {
     TD_EQUAL_ARROW, // single tap =, double tap =>
@@ -94,13 +65,40 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define VSC_UP  TD(TD_VSCODE_EDITOR_UP)
 #define VSC_DWN TD(TD_VSCODE_EDITOR_DOWN)
 
+// Shortcut
+#define UNDO    G(KC_Z)
+#define CUT     G(KC_X)
+#define COPY    G(KC_C)
+#define PASTE   G(KC_V)
+#define REDO    G(S(KC_Z))
+#define TAB_LFT G(S(KC_LCBR))
+#define TAB_RGT G(S(KC_RCBR))
+#define SPC_LFT C(KC_LEFT)
+#define SPC_RGT C(KC_RGHT)
+
+// Mod tap
+#define ENT_CMD LGUI_T(KC_ENT)
+#define TAB_CMD RGUI_T(KC_TAB)
+#define BSP_SFT LSFT_T(KC_BSPC)
+#define SPC_SFT RSFT_T(KC_SPC)
+
+// Layer tap etc
+#define Q_MOUS  LT(_MOUSE, KC_Q)
+#define F_NAV   LT(_NAVIGATION, KC_F)
+#define V_NUM   LT(_NUMBER, KC_V)
+#define M_FUN   LT(_FUNCTION, KC_M)
+#define J_SYM   LT(_SYMBOL, KC_J)
+#define QUO_NAV LT(_NAVIGATION, KC_QUOT)
+#define SLS_NUM LT(_NUMBER, KC_SLSH)
+#define TO_MOUS TO(_MOUSE)
+
 // Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT_kuronopro(
         Q_MOUS,  KC_W,    KC_E,    KC_R,    KC_T,             KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        A_CTL,   S_OPT,   D_CMD,   F_NAV,   KC_G,             KC_H,    J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
-        KC_Z,    KC_X,    KC_C,    V_NUM,   KC_B,             KC_N,    M_FUN,   KC_COMM, KC_DOT,  KC_SLSH,
-        KC_ESC,  XXXXXXX, KC_TAB,           BSP_SFT,          SPC_SFT,          KC_ENT,  XXXXXXX, KC_DEL
+        KC_A,    KC_S,    KC_D,    F_NAV,   KC_G,             KC_H,    J_SYM,   KC_K,    KC_L,    QUO_NAV,
+        KC_Z,    KC_X,    KC_C,    V_NUM,   KC_B,             KC_N,    M_FUN,   KC_COMM, KC_DOT,  SLS_NUM,
+        KC_LCTL, KC_LOPT, TAB_CMD,          BSP_SFT,          SPC_SFT,          ENT_CMD, KC_ROPT, KC_RCTL
     ),
 
     [_SYMBOL] = LAYOUT_kuronopro(
@@ -114,14 +112,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_D,    KC_E,    KC_F,    _______, _______,          KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
         KC_LCTL, KC_LOPT, KC_LCMD, _______, _______,          KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
         KC_A,    KC_B,    KC_C,    _______, _______,          KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
-        _______, _______, _______,          _______,          N0_SFT,           KC_DOT,  _______, _______
+        _______, _______, _______,          _______,          KC_0,             KC_DOT,  _______, _______
     ),
 
     [_NAVIGATION] = LAYOUT_kuronopro(
-        TO_MOUS, SPC_LFT, SPC_RGT, _______, _______,          KC_HOME, KC_PGUP, KC_PGDN, KC_END,  SW_WIN,
+        KC_ESC,  TAB_LFT, TAB_RGT, _______, _______,          KC_HOME, KC_PGUP, KC_PGDN, KC_END,  SW_WIN,
         KC_LCTL, KC_LOPT, KC_LCMD, _______, _______,          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_APP,
-        _______, _______, _______, _______, _______,          VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, SELWORD,
-        _______, _______, _______,          _______,          _______,          _______, _______, _______
+        SPC_LFT, SPC_RGT, SELWORD, _______, _______,          VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, KC_DEL,
+        TO_MOUS, _______, _______,          _______,          _______,          _______, _______, _______
     ),
 
     [_FUNCTION] = LAYOUT_kuronopro(
@@ -133,10 +131,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MOUSE] = LAYOUT_kuronopro(
         // Mouse scroll posisinya terbalik karena settting natural scrolling di MacOS
-        NORMAL,  _______, _______, _______, _______,          KC_WH_D, KC_WH_R, KC_MS_U, KC_WH_L, SW_WIN,
+        _______, _______, _______, _______, _______,          KC_WH_D, KC_WH_R, KC_MS_U, KC_WH_L, SW_WIN,
         KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______,          KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, SW_APP,
         UNDO,    CUT,     COPY,    PASTE,   REDO,             _______, _______, _______, _______, _______,
-        _______, _______, KC_BTN2,          KC_BTN1,          KC_BTN1,          KC_BTN2, _______, _______
+        NORMAL,  _______, KC_BTN2,          KC_BTN1,          KC_BTN1,          KC_BTN2, _______, _______
     ),
 };
 
@@ -331,14 +329,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case A_CTL:
-        case S_OPT:
-        case L_OPT:
-            return TAPPING_TERM + 60;
         case SPC_SFT:
             return TAPPING_TERM + 15;
         case V_NUM:
         case J_SYM:
+        case SLS_NUM:
             return TAPPING_TERM - 50;
         default:
             return TAPPING_TERM;
@@ -349,6 +344,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case V_NUM:
         case J_SYM:
+        case SLS_NUM:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
