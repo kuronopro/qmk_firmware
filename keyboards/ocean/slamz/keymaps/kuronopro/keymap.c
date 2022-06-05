@@ -16,7 +16,6 @@ enum layers {
 
 enum custom_keycodes {
     NORMAL = SAFE_RANGE,
-    CAPSWRD,
     SNKCASE,
     KBBCASE,
     SELWORD,
@@ -299,12 +298,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case NORMAL:
             layer_clear();
-            return false;
-
-        case CAPSWRD:
-            if (record->event.pressed) {
-                enable_caps_word();
-            }
             return false;
 
         case SNKCASE:

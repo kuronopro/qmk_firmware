@@ -5,8 +5,7 @@
 #define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
-
-#define CAPSWORD_USE_SHIFT
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
