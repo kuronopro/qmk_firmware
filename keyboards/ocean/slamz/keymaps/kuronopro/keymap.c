@@ -1,20 +1,27 @@
 #include QMK_KEYBOARD_H
 
+#include "features/casemodes.h"
 #include "features/autocorrection.h"
+#include "features/select_word.h"
 #include "features/swapper.h"
 
 enum layers {
     _QWERTY,
-    _NAVIGATION,
     _SYMBOL,
     _NUMBER,
+    _NAVIGATION,
+    _FUNCTION,
     _MOUSE
 };
 
 enum custom_keycodes {
     NORMAL = SAFE_RANGE,
-    SW_WIN, // GUI + TAB
-    SW_APP // ALT + TAB
+    CAPSWRD,
+    SNKCASE,
+    KBBCASE,
+    SELWORD,
+    SW_WIN,
+    SW_APP
 };
 
 // Tap dance
@@ -64,69 +71,71 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define COPY    G(KC_C)
 #define PASTE   G(KC_V)
 #define REDO    G(S(KC_Z))
-#define TAB_L   G(S(KC_LCBR))
-#define TAB_R   G(S(KC_RCBR))
-#define SPC_L   C(KC_LEFT)
-#define SPC_R   C(KC_RIGHT)
-#define BACK    G(KC_LEFT)
-#define FWD     G(KC_RIGHT)
+#define TAB_LFT G(S(KC_LCBR))
+#define TAB_RGT G(S(KC_RCBR))
+#define SPC_LFT C(KC_LEFT)
+#define SPC_RGT C(KC_RGHT)
 
 // Mod tap
-#define Z_SFT   MT(MOD_LSFT, KC_Z)
-#define SLS_SFT MT(MOD_RSFT, KC_SLSH)
-#define TAB_GUI MT(MOD_LGUI, KC_TAB)
-#define ENT_GUI MT(MOD_RGUI, KC_ENT)
-#define F6_CTL  MT(MOD_LCTL, KC_F6)
-#define F7_ALT  MT(MOD_LALT, KC_F7)
-#define F8_GUI  MT(MOD_LGUI, KC_F8)
-#define F9_SFT  MT(MOD_LSFT, KC_F9)
-#define N7_SFT  MT(MOD_RSFT, KC_7)
-#define N8_GUI  MT(MOD_RGUI, KC_8)
-#define N9_ALT  MT(MOD_RALT, KC_9)
-#define N0_CTL  MT(MOD_RCTL, KC_0)
+#define ENT_CMD LGUI_T(KC_ENT)
+#define TAB_CMD RGUI_T(KC_TAB)
+#define BSP_SFT LSFT_T(KC_BSPC)
+#define SPC_SFT RSFT_T(KC_SPC)
 
-
-// Layer tap
+// Layer tap etc
 #define Q_MOUS  LT(_MOUSE, KC_Q)
-#define BSP_NAV LT(_NAVIGATION, KC_BSPC)
-#define SPC_SYM LT(_SYMBOL, KC_SPC)
-#define MOUSE   TO(_MOUSE)
+#define F_NAV   LT(_NAVIGATION, KC_F)
+#define V_NUM   LT(_NUMBER, KC_V)
+#define M_FUN   LT(_FUNCTION, KC_M)
+#define J_SYM   LT(_SYMBOL, KC_J)
+#define QUO_NAV LT(_NAVIGATION, KC_QUOT)
+#define SLS_NUM LT(_NUMBER, KC_SLSH)
+#define TO_MOUS TO(_MOUSE)
 
+// Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT_kuronopro(
-        Q_MOUS,  KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_QUOT,
-        Z_SFT,   KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  SLS_SFT,
-        KC_LCTL, KC_LALT, TAB_GUI,          BSP_NAV, SPC_SYM,          ENT_GUI, KC_RALT, KC_RCTL
-    ),
-
-    [_NAVIGATION] = LAYOUT_kuronopro(
-        KC_ESC,  TAB_L,   TAB_R,   BACK,    FWD,     KC_HOME, KC_PGUP, KC_PGDN, KC_END,  KC_ESC,
-        KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
-        SW_WIN,  SPC_L,   SPC_R,   _______, _______, VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, SW_APP,
-        MOUSE,   _______, _______,          _______, _______,          _______, _______, _______
+        Q_MOUS,  KC_W,    KC_E,    KC_R,    KC_T,             KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+        KC_A,    KC_S,    KC_D,    F_NAV,   KC_G,             KC_H,    J_SYM,   KC_K,    KC_L,    QUO_NAV,
+        KC_Z,    KC_X,    KC_C,    V_NUM,   KC_B,             KC_N,    M_FUN,   KC_COMM, KC_DOT,  SLS_NUM,
+        KC_LCTL, KC_LOPT, TAB_CMD,          BSP_SFT,          SPC_SFT,          ENT_CMD, KC_ROPT, KC_RCTL
     ),
 
     [_SYMBOL] = LAYOUT_kuronopro(
-        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN, KC_EXLM, KC_AT,   KC_HASH, KC_PERC, KC_CIRC,
-        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN, KC_AMPR, KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL,
-        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR, KC_ASTR, KC_PLUS, KC_PIPE, KC_TILD, KC_QUES,
-        KC_GRV,  KC_BSLS, _______,          _______, _______,          _______, _______, _______
+        KC_LPRN, KC_LBRC, KC_COLN, KC_RBRC, KC_RPRN,          _______, KC_QUES, KC_EXLM, KC_AT,   KC_HASH,
+        KC_DLR,  KC_DQUO, MIN_ARR, KC_UNDS, KC_SCLN,          _______, _______, KC_LCMD, KC_LOPT, KC_LCTL,
+        KC_LCBR, LT_PHP,  EQL_ARR, GT_PHP,  KC_RCBR,          _______, _______, KC_AMPR, KC_PERC, KC_CIRC,
+        KC_GRV,  KC_BSLS, _______,          _______,          _______,          _______, KC_PLUS, KC_ASTR
     ),
 
     [_NUMBER] = LAYOUT_kuronopro(
-        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        F6_CTL,  F7_ALT,  F8_GUI,  F9_SFT,  KC_F10,  KC_6,    N7_SFT,  N8_GUI,  N9_ALT,  N0_CTL,
-        KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_EQL,  KC_PLUS, KC_MINS, KC_ASTR, KC_SLSH,
-        KC_F19,  _______, _______,          _______, _______,          _______, _______, RESET
+        KC_D,    KC_E,    KC_F,    _______, _______,          KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______,          KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
+        KC_A,    KC_B,    KC_C,    _______, _______,          KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
+        _______, _______, _______,          _______,          KC_0,             KC_DOT,  _______, _______
+    ),
+
+    [_NAVIGATION] = LAYOUT_kuronopro(
+        KC_ESC,  TAB_LFT, TAB_RGT, _______, _______,          KC_HOME, KC_PGUP, KC_PGDN, KC_END,  SW_WIN,
+        KC_LCTL, KC_LOPT, KC_LCMD, _______, _______,          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, SW_APP,
+        SPC_LFT, SPC_RGT, SELWORD, _______, _______,          VSC_LFT, VSC_DWN, VSC_UP,  VSC_RGT, KC_DEL,
+        TO_MOUS, _______, _______,          _______,          _______,          _______, _______, _______
+    ),
+
+    [_FUNCTION] = LAYOUT_kuronopro(
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,            _______, _______, _______, _______, RESET,
+        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,           _______, KC_F19,  KC_LCMD, KC_LOPT, KC_LCTL,
+        KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,           _______, _______, CAPSWRD, SNKCASE, KBBCASE,
+        _______, _______, _______,          _______,          _______,          _______, _______, _______
     ),
 
     [_MOUSE] = LAYOUT_kuronopro(
-        KC_ESC,  _______, _______, _______, _______, KC_WH_D, KC_WH_R, KC_MS_U, KC_WH_L, SW_WIN,
-        KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, SW_APP,
-        UNDO,    CUT,     COPY,    PASTE,   REDO,    _______, _______, _______, SPC_L,   SPC_R,
-        NORMAL,  _______, KC_BTN2,          KC_BTN1, KC_BTN1,          KC_BTN2, _______, _______
-    )
+        // Mouse scroll posisinya terbalik karena settting natural scrolling di MacOS
+        _______, _______, _______, _______, _______,          KC_WH_D, KC_WH_R, KC_MS_U, KC_WH_L, SW_WIN,
+        KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______,          KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, SW_APP,
+        UNDO,    CUT,     COPY,    PASTE,   REDO,             _______, _______, _______, _______, _______,
+        NORMAL,  _______, KC_BTN2,          KC_BTN1,          KC_BTN1,          KC_BTN2, _______, _______
+    ),
 };
 
 // Implementasi tap dance
@@ -270,11 +279,13 @@ void vscode_editor_down(qk_tap_dance_state_t *state, void *user_data) {
     reset_tap_dance(state);
 }
 
+// Macro etc
 bool sw_win_active = false;
 bool sw_app_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_autocorrection(keycode, record)) { return false; }
+    if (!process_select_word(keycode, record, SELWORD)) { return false; }
 
     update_swapper(
         &sw_win_active, KC_LCMD, KC_TAB, SW_WIN,
@@ -289,11 +300,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case NORMAL:
             layer_clear();
             return false;
+
+        case CAPSWRD:
+            if (record->event.pressed) {
+                enable_caps_word();
+            }
+            return false;
+
+        case SNKCASE:
+            if (record->event.pressed) {
+                enable_xcase_with(KC_UNDS);
+            }
+            return false;
+
+        case KBBCASE:
+            if (record->event.pressed) {
+                enable_xcase_with(KC_MINS);
+            }
+            return false;
+    }
+
+    if (!process_case_modes(keycode, record)) {
+        return false;
     }
 
     return true;
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _SYMBOL, _NAVIGATION, _NUMBER);
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SPC_SFT:
+            return TAPPING_TERM + 15;
+        case V_NUM:
+        case J_SYM:
+        case SLS_NUM:
+            return TAPPING_TERM - 50;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case V_NUM:
+        case J_SYM:
+        case SLS_NUM:
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
+    }
 }
