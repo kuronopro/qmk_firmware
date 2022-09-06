@@ -2,10 +2,11 @@
 
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
-#define PERMISSIVE_HOLD
-#define PERMISSIVE_HOLD_PER_KEY
+#define HOLD_ON_OTHER_KEYPRESS
+#define HOLD_ON_OTHER_KEYPRESS_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define COMBO_COUNT 3
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
@@ -28,11 +29,11 @@
     K00, K01, K02, K03, K04,        K05, K06, K07, K08, K09, \
     K10, K11, K12, K13, K14,        K15, K16, K17, K18, K19, \
     K20, K21, K22, K23, K24,        K25, K26, K27, K28, K29, \
-    K30, K31, K32,      K34,        K35,      K37, K38, K39 \
+              K32,      K34,        K35,      K37 \
 ) \
 LAYOUT(\
     K00, K01, K02, K03, K04,        K05, K06, K07, K08, K09, \
     K10, K11, K12, K13, K14,        K15, K16, K17, K18, K19, \
     K20, K21, K22, K23, K24,        K25, K26, K27, K28, K29, \
-    K30, K31, K32, XXX, K34,        K35, XXX, K37, K38, K39 \
+    XXX, XXX, K32, XXX, K34,        K35, XXX, K37, XXX, XXX \
 )

@@ -27,8 +27,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define SPC_RGT C(KC_RGHT)
 #define APPWNDW C(KC_DOWN)
 #define MSNCTRL C(KC_UP)
-#define BACK    G(KC_LBRC)
-#define FWD     G(KC_RBRC)
+#define BACK    G(KC_LEFT)
+#define FWD     G(KC_RGHT)
 
 #define A_CTL   LCTL_T(KC_A)
 #define S_OPT   LALT_T(KC_S)
@@ -62,9 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUMBER] = LAYOUT_kuronopro(
-        _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
+        KC_A,    KC_B,    KC_C,    _______, _______, KC_7,    KC_8,    KC_9,    KC_COLN, KC_EQL,
         KC_LCTL, KC_LOPT, KC_LCMD, _______, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR,
-        _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
+        KC_D,    KC_E,    KC_F,    _______, _______, KC_1,    KC_2,    KC_3,    KC_MINS, KC_SLSH,
                                    _______, _______, KC_0,    KC_DOT
     ),
 
@@ -168,7 +168,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case G_NUM:
         case J_SYM:
@@ -178,19 +178,3 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 }
-
-enum combos {
-    WE_ESC,
-    MCOM_MINS,
-    COMDOT_SCLN,
-};
-
-const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM mcom_combo[] = {KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM comdot_combo[] = {KC_COMM, KC_DOT, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-    [WE_ESC] = COMBO(we_combo, KC_ESC),
-    [MCOM_MINS] = COMBO(mcom_combo, KC_MINS),
-    [COMDOT_SCLN] = COMBO(comdot_combo, KC_SCLN)
-};
