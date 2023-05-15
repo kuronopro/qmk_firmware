@@ -10,13 +10,16 @@ enum custom_keycodes { NORMAL = SAFE_RANGE, SNKCASE, KBBCASE, SW_WIN };
 
 enum { TD_LT_PHP, TD_GT_PHP };
 
-void lt_php(qk_tap_dance_state_t *state, void *user_data);
-void gt_php(qk_tap_dance_state_t *state, void *user_data);
+void lt_php(tap_dance_state_t *state, void *user_data);
+void gt_php(tap_dance_state_t *state, void *user_data);
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_LT_PHP] = ACTION_TAP_DANCE_FN(lt_php),
     [TD_GT_PHP] = ACTION_TAP_DANCE_FN(gt_php),
 };
+
+#define CAPSWRD CW_TOGG
+#define RESET   QK_RBT
 
 #define LT_PHP  TD(TD_LT_PHP)
 #define GT_PHP  TD(TD_GT_PHP)
@@ -90,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-void lt_php(qk_tap_dance_state_t *state, void *user_data) {
+void lt_php(tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 2:
             tap_code16(KC_LT);
@@ -104,7 +107,7 @@ void lt_php(qk_tap_dance_state_t *state, void *user_data) {
     reset_tap_dance(state);
 }
 
-void gt_php(qk_tap_dance_state_t *state, void *user_data) {
+void gt_php(tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 2:
             tap_code16(KC_QUES);
