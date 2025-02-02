@@ -4,9 +4,8 @@
 #define TAPPING_TERM_PER_KEY
 #define HOLD_ON_OTHER_KEYPRESS
 #define HOLD_ON_OTHER_KEYPRESS_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-#define COMBO_COUNT 3
+#define COMBO_COUNT 2
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4

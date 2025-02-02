@@ -1,5 +1,7 @@
 isntall -> install
 fucntion -> function
+funciton -> function
 reulst -> result
 reuslt -> result
 isntant -> instant
+pulbic -> public
