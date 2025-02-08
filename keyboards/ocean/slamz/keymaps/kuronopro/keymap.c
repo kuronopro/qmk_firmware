@@ -39,8 +39,8 @@ tap_dance_action_t tap_dance_actions[] = {
 #define K_CMD   RGUI_T(KC_K)
 #define L_OPT   LALT_T(KC_L)
 #define QUO_CTL RCTL_T(KC_QUOT)
-#define TAB_SFT LSFT_T(KC_TAB)
-#define ENT_SFT RSFT_T(KC_ENT)
+#define BSP_SFT LSFT_T(KC_BSPC)
+#define SPC_SFT RSFT_T(KC_SPC)
 
 #define Q_MOUS  LT(_MOUSE, KC_Q)
 #define F_NAV   LT(_NAVIGATION, KC_F)
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         Q_MOUS,  KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         A_CTL,   S_OPT,   D_CMD,   F_NAV,   G_NUM,   H_FUN,   J_SYM,   K_CMD,   L_OPT,   QUO_CTL,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_HYPR, TO_FUN,           TAB_SFT, KC_BSPC, KC_SPC,  ENT_SFT,          TO_NAV,  NORMAL
+        KC_HYPR, TO_FUN,           KC_TAB,  BSP_SFT, SPC_SFT, KC_ENT,           TO_NAV,  NORMAL
     ),
 
     [_SYMBOL] = LAYOUT_kuronopro(
@@ -166,8 +166,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case S_OPT:
         case L_OPT:
             return TAPPING_TERM + 60;
-        /* case SPC_SFT: */
-        /*     return TAPPING_TERM + 10; */
+        case SPC_SFT:
+            return TAPPING_TERM + 10;
         case G_NUM:
         case J_SYM:
             return TAPPING_TERM - 50;
@@ -180,7 +180,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case G_NUM:
         case J_SYM:
-        /* case SPC_SFT: */
+        case SPC_SFT:
             return true;
         default:
             return false;
